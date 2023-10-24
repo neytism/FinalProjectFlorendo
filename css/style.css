@@ -1,0 +1,499 @@
+@font-face {
+    font-family: Nord-Medium;
+    src: url("../assets/Fonts/Nord-Medium.otf") format(opentype);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+
+body {
+    font-family: Nord-Medium !important;
+}
+
+body::-webkit-scrollbar{
+    display: none;
+  }
+
+a {
+    text-decoration: none;
+}
+
+a:visited,
+a:link {
+    color: inherit;
+}
+
+li {
+    list-style: none;
+}
+
+.login {
+    background-color: black;
+    background-size: cover;
+    background-position: center;
+    resize: both;
+    width: 100%;
+    height: 100vh;
+    background-repeat: no-repeat;
+}
+
+/* NAVBAR STYLING STARTS */
+.navigationbar {
+    display: flex;
+    align-items: center ;
+    justify-content: space-between ;
+    padding: 30px ;
+    background-color: rgb(0, 0, 0);
+    color: #fff;
+    position: fixed ;
+    z-index: 3;
+    width: 100%;
+
+}
+
+.nav-links a {
+    color: #fff;
+}
+
+/* LOGO */
+.logo {
+    font-family: Nord-Medium;
+    font-size: 24px;
+    letter-spacing: 5px;
+    color: #fff;
+}
+
+.logo a ,.logo a:hover, .loginBtn a{
+    text-decoration: none !important;
+}
+
+.logo a:visited,
+.logo a:link, .loginBtn a:link {
+    color: inherit;
+    text-decoration: none;
+}
+
+.logo.login {
+    background: none;
+    width: 100%;
+    text-align: center;
+    font-size: 3rem;
+    height: auto;
+}
+/* NAVBAR MENU */
+.menu {
+    display: flex;
+    gap: 1em;
+    font-size: 18px;
+}
+
+.menu li:hover {
+    background-color: rgb(56, 56, 56);
+    border-radius: 5px;
+    transition: 0.3s ease;
+}
+
+.menu li {
+    padding: 5px 14px;
+}
+
+.sticky {
+    position: relative;
+}
+
+.dropdown {
+    background-color: black;
+    padding: 1em 1em;
+    position: absolute;
+    display: none;
+    border-radius: 8px;
+}
+
+.dropdown li+li {
+    margin-top: 10px;
+}
+
+.dropdown li {
+    padding: 0.5em 0.5em;
+    width: auto;
+    text-align: center;
+}
+
+.dropdown li:hover {
+    background-color: rgb(56, 56, 56);
+}
+
+.spotlight-holder {
+    position: static;
+}
+
+.spotlight-dark,
+.spotlight-light {
+    position: absolute;
+    background-size: cover;
+    background-position: center;
+    resize: both;
+    width: 100%;
+    height: 100vh;
+    background-repeat: no-repeat;
+}
+
+.spotlight-light {
+    mask-image: url();
+    /*just to shut the warning*/
+    -webkit-mask-image: radial-gradient(circle at -10% 50%, #fff 5em, transparent 30em);
+    z-index: 1;
+}
+
+.overlaytext {
+    position: absolute;
+    color: white;
+}
+
+.bottomTitle {
+    width: 70%;
+    padding-left: 3em;
+    padding-bottom: 5vh;
+    bottom: 0;
+}
+
+.rightTitle {
+    right: 0;
+    bottom: 0;
+    text-align: right;
+    padding-right: 3em;
+    padding-bottom: 20vh;
+    width: 50%;
+}
+
+.centerTitle {
+    width: 100%;
+    text-align: center;
+    padding: 5vh 5vw;
+}
+
+.overlaytext h1 {
+    font-size: 4rem;
+}
+
+.overlaytext h4 {
+    letter-spacing: 10px;
+    font-size: 2rem;
+}
+
+.footer {
+    background-color: black;
+    color: white;
+    width: 100%;
+    padding-top: 105vh;
+    padding-bottom: 5vh;
+    padding-left: 5vh;
+    padding-right: 5vh;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.section {
+    padding-top: 100vh;
+}
+
+.invert {
+    filter: invert(1);
+}
+
+/*RESPONSIVE NAVBAR MENU*/
+
+
+input[type=checkbox] {
+    display: none;
+}
+
+.hamburger {
+    display: none;
+    font-size: 24px;
+    user-select: none;
+}
+
+.formHolder {
+    font-family: Nord-Medium;
+    letter-spacing: 2px;
+    border-radius: 20px;
+    display: table-cell;
+    vertical-align: top;
+    width: 400px;
+    height: 400px;
+    background-color: #ffffff09;
+    color: white;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    max-width: 100%;
+    max-height: 100%;
+    overflow: auto;
+    padding: 2em 2em;
+    display: table;
+}
+
+.formHolder.customer-care {
+    width: 800px;
+    max-width: 90%;
+}
+
+.formHolder input, textarea {
+    width: 100%;
+    padding: 10px 14px;
+    background-color: #00000086;
+    border: none;
+    border-radius: 5px;
+}
+
+
+
+.formHolder label {
+    padding-bottom: 5px;
+}
+
+.formHolder .warning {
+    display: none;
+    background-color: rgba(255, 37, 37, 0.13);
+    font-weight: lighter;
+    letter-spacing: 0px;
+    font-size: smaller;
+    border-radius: 5px;
+    padding: 5px;
+    width: 100%;
+    text-align: center;
+}
+
+.formHolder div {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.formHolder p{
+    text-align: center;
+    font-size: smaller;
+
+}
+.loginBtn.submit {
+    background-color: rgba(107, 107, 107, 0.308);
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.loginBtn.submit:hover {
+   background-color: rgba(241, 241, 241, 0.644);
+   color: black;
+}
+
+
+.loginBtn:hover {
+    background-color: rgba(255, 255, 255, 0.281);
+    color: black;
+    transition: 0.3s ease;
+
+}
+
+.loginBtn {
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0);
+    padding: 5px 14px;
+    border-radius: 5px;
+    border: none;
+}
+
+.loginBtn a:hover{
+    color: black;
+}
+
+.products {
+    margin: 1.5% 5%; 
+   
+}
+
+.products .card{
+    position: relative;
+    background-color:rgb(255, 255, 255); 
+    height: 400px;
+    min-width: 250px;
+    border-radius: 15px; 
+    padding: 15px 25px;
+    margin: 15px 0px;
+}
+
+.products .card img{
+    width: auto;
+    height: 65%;
+    object-fit: contain;
+    margin-left: auto; 
+    margin-right: auto;
+}
+
+.products .card .btn{
+    border: none;
+    border-radius: 8px;
+    padding: 10px 15px;
+}
+
+.products .card .buy{
+    background-color: rgba(0, 0, 0, 0.781);
+    color: white;
+    transition: 0.3s ease;
+}
+
+.products .card .buy:hover{
+    background-color: rgba(85, 143, 83, 0.781);
+    color: white;
+    transition: 0.3s ease;
+}
+
+
+.products .card .cart{
+    background-color: rgba(0, 0, 0, 0.075);
+    transition: 0.3s ease;
+    float: right;
+}
+
+.products .card .cart:hover{
+    background-color: rgba(0, 0, 0, 0.205);
+    transition: 0.3s ease;
+}
+
+.products form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 12px;;
+    font-size: larger;
+}
+
+.products input {
+    background-color: rgba(255, 255, 255, 0.103);
+    border-radius: 30px;
+    height: 40px;
+    width: 100%;
+    padding: 30px;
+    border: none;
+    color: white;
+}
+
+
+
+
+/* MEDIA QUERIES */
+@media (max-width: 768px) {
+    .menu {
+        display: none;
+        position: absolute;
+        background-color: black;
+        right: 0;
+        left: 0;
+        text-align: center;
+        padding: 50px 0;
+    }
+
+    .menu li:hover {
+        display: inline-block;
+        background-color: rgb(56, 56, 56);
+        transition: 0.3s ease;
+    }
+
+    .menu li+li {
+        margin-top: 50px;
+    }
+
+    input[type=checkbox]:checked~.menu {
+        display: block;
+    }
+
+    .hamburger {
+        display: block;
+    }
+
+    .dropdown {
+        left: 50%;
+        top: 30px;
+        transform: translateX(35%);
+    }
+
+    .dropdown li:hover {
+        background-color: rgb(56, 56, 56);
+    }
+
+    .overlaytext {
+        position: absolute;
+        color: white;
+    }
+
+    .bottomTitle {
+        width: 70%;
+        padding-left: 3em;
+        padding-bottom: 5vh;
+        bottom: 0;
+    }
+
+    .rightTitle {
+        position: relative;
+        right: 0;
+        text-align: right;
+        width: 100%;
+        padding-top: 50%;
+    }
+
+    .centerTitle {
+        position: relative;
+        padding-top: 50%;
+        color: white;
+        width: 100%;
+        text-align: center;
+    }
+
+    .footer {
+        background-color: black;
+        color: white;
+        padding-top: 5vh;
+        padding-bottom: 5vh;
+        padding-left: 5vh;
+        padding-right: 5vh;
+
+        display: flex;
+        justify-content: space-between;
+    }
+
+
+    .overlaytext h1 {
+        font-size: 3rem;
+    }
+
+    .overlaytext h4 {
+        letter-spacing: 10px;
+        font-size: 1.3rem;
+    }
+
+    .spotlight-light {
+        display: none;
+    }
+
+    .spotlight-dark {
+        position: initial;
+    }
+
+    .section {
+        padding-top: 0;
+    }
+
+    .products {
+        margin: 10px; 
+    }
+   
+}
+
