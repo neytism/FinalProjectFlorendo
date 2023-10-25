@@ -58,7 +58,7 @@ $products = mysqli_fetch_all($result, MYSQLI_ASSOC);
                 </li>
 
                 <li><a href="customercare.html">Contact</a></li>
-                <li><a href="login.php">Log in</a></li>
+                <li><a href="login.html">Log in</a></li>
             </div>
         </ul>
     </nav>

@@ -35,58 +35,88 @@ $(document).ready(function(){
 
 //for Login
 
-let warningText = document.getElementById("warningTextLogIn");
-const testName = "asdfasdf";
 
-function checkLogIn() {
-    let username = document.getElementById("inputUserName").value;
+function checkLogin(event) {
+    event.preventDefault();
+  
+    let warningText = document.getElementById("warningTextLogIn");
 
-    ChangeText(warningText, "Username or Password Incorrect.");
-}
+    let uname = document.getElementById("inputUserName").value;
+    let pword = document.getElementById("inputPassword").value;
+  
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'loginAction.php', true);
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhr.onload = function() {
+        ChangeText(warningText, this.responseText);
+        if(this.responseText == "success"){
+            document.location.href = '../index.html';
+        }
+    };
+
+    xhr.send('uname=' + uname + '&pword=' + pword);
+
+  };
 
 function checkSignUp() {
+    let warningText = document.getElementById("warningTextLogIn");
+
     let username = document.getElementById("inputUserName").value;
+    let firstName = document.getElementById("inputFirstName").value;
+    let lastName = document.getElementById("inputLastName").value;
+    let email = document.getElementById("inputEmail").value;
+    let phone = document.getElementById("inputPhone").value;
+    let address = document.getElementById("inputAddress").value;
     let password = document.getElementById("inputPassword").value;
     let repeatPassword = document.getElementById("inputRepeatPassword").value;
 
-    userNameHasSpecialCharacter = HasSpecialCharacter(username);
-    userNameExceedsCharacters = IsExceedCharacter(username, 8);
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'signupAction.php', true);
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhr.onload = function() {
+        ChangeText(warningText, this.responseText);
+        if(this.responseText == "success"){
+            document.location.href = '../index.html';
+        }
+    };
+
+    xhr.send('uname=' + username + '&fname=' + firstName + '&lname=' + lastName + '&email=' + email + '&phone=' + phone + '&address=' + address + '&pword=' + password + '&rpword=' + repeatPassword);
 
 
-    if (username == "") {
-        ChangeText(warningText, "Username can't be empty.");
-        return;
-    } else if (username.toLowerCase() == testName.toLowerCase()) {
-        //check here if username is taken
-        ChangeText(warningText, "Username is taken.");
-        return;
-    }
+    // if (username == "") {
+    //     ChangeText(warningText, "Username can't be empty.");
+    //     return;
+    // } else if (username.toLowerCase() == testName.toLowerCase()) {
+    //     //check here if username is taken
+    //     ChangeText(warningText, "Username is taken.");
+    //     return;
+    // }
     
-    if (userNameHasSpecialCharacter && userNameExceedsCharacters) {
-        ChangeText(warningText, "The username must be atleast 8 characters and must not contain special character/s");
-        return;
-    } else if (userNameHasSpecialCharacter) {
-        ChangeText(warningText, "must not contain special character/s or spaces.");
-        return;
-    } else if (userNameExceedsCharacters) {
-        ChangeText(warningText, "The username must be atleast 8 characters.");
-        return;
-    }
+    // if (userNameHasSpecialCharacter && userNameExceedsCharacters) {
+    //     ChangeText(warningText, "The username must be atleast 8 characters and must not contain special character/s");
+    //     return;
+    // } else if (userNameHasSpecialCharacter) {
+    //     ChangeText(warningText, "must not contain special character/s or spaces.");
+    //     return;
+    // } else if (userNameExceedsCharacters) {
+    //     ChangeText(warningText, "The username must be atleast 8 characters.");
+    //     return;
+    // }
     
-    if (password == "") {
-        ChangeText(warningText, "Password can't be empty.");
-        return;
-    } else if(IsExceedCharacter(password,8)){
-        ChangeText(warningText, "Password must be atleast 8 characters.");
-        return;
-    }
+    // if (password == "") {
+    //     ChangeText(warningText, "Password can't be empty.");
+    //     return;
+    // } else if(IsExceedCharacter(password,8)){
+    //     ChangeText(warningText, "Password must be atleast 8 characters.");
+    //     return;
+    // }
 
-    if(password != repeatPassword){
-        ChangeText(warningText, "Password did not match.");
-        return;
-    }
+    // if(password != repeatPassword){
+    //     ChangeText(warningText, "Password did not match.");
+    //     return;
+    // }
 
-    ChangeText(warningText, "ACCOUNT CREATED");
+    // ChangeText(warningText, "ACCOUNT CREATED");
     //add account to database
 }
 
