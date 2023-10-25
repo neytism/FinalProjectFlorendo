@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -14,6 +16,7 @@ if ($conn->connect_error) {
 
 $uname = $_POST['uname'];
 $pword = $_POST['pword'];
+$_SESSION['success'] = "";
 
 if(empty($uname)){ 
     echo "Username Required";
@@ -28,6 +31,8 @@ if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
         if ($row["password"] == $pword)
         {
+          $_SESSION['username'] = $uname;
+          $_SESSION['role'] = $row["role"];
             echo "success";
         }else {
             echo "Incorrect password or username.";

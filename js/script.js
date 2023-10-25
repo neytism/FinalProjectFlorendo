@@ -20,7 +20,7 @@ $(document).ready(function(){
         //checks if the search field is empty or not
         var value = $(this).val().toLowerCase();
 
-        $("#cardHolder .card").each(function() {
+        $("#cardHolder").each(function() {
             var card = $(this);
             var isSearchMatch = 
                 card.find("#productLabel").text().toLowerCase().indexOf(value) > -1 ||
@@ -31,7 +31,6 @@ $(document).ready(function(){
         });
     });
 });
-
 
 //for Login
 
@@ -50,7 +49,7 @@ function checkLogin(event) {
     xhr.onload = function() {
         ChangeText(warningText, this.responseText);
         if(this.responseText == "success"){
-            document.location.href = '../index.html';
+            document.location.href = '../index.php';
         }
     };
 
@@ -76,7 +75,7 @@ function checkSignUp() {
     xhr.onload = function() {
         ChangeText(warningText, this.responseText);
         if(this.responseText == "success"){
-            document.location.href = '../index.html';
+            document.location.href = 'login.php';
         }
     };
 

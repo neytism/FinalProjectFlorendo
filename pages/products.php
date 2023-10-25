@@ -39,7 +39,7 @@ $products = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
     <nav class="navigationbar sticky">
         <!-- LOGO -->
-        <div class="logo"><a href="../index.html">GIZMOVERSE</a></div>
+        <div class="logo"><a href="../index.php">GIZMOVERSE</a></div>
 
         <!-- NAVIGATION MENU -->
         <ul class="nav-links">
@@ -50,15 +50,9 @@ $products = mysqli_fetch_all($result, MYSQLI_ASSOC);
             <!-- NAVIGATION MENUS -->
             <div class="menu">
 
-                <li><a href="../index.html">Home</a></li>
-                <li><a href="../index.html">About Us</a></li>
-
-                <li>
-                    <a href="products.php">Products</a>
-                </li>
-
-                <li><a href="customercare.html">Contact</a></li>
-                <li><a href="login.html">Log in</a></li>
+                <li><a href="../index.php">Home</a></li>
+                <li><a href="customercare.php">Contact</a></li>
+                <li><a href="cart.php">Cart</a></li>
             </div>
         </ul>
     </nav>
@@ -74,39 +68,37 @@ $products = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
             <?php
 
-            foreach ($products as $product) { ?>
+                foreach ($products as $product) { ?>
 
-                <div id="cardHolder" class="col-md-3">
-                    <div class="card">
-                        <img src="<?php echo htmlspecialchars($product['imagePath']) ?>"
-                            alt="<?php echo htmlspecialchars($product['itemName']) ?>" class="img-responsive">
-                        <div class="caption">
-                            <h3 id="productLabel">
-                                <?php echo htmlspecialchars($product['itemName']) ?>
-                            </h3>
-                            <p id="productDesc">
-                                <?php echo htmlspecialchars($product['description']) ?>
-                            </p>
-                            <p class="btnHolder">
-                                <a href="#" class="btn buy" role="button">₱
-                                    <?php echo htmlspecialchars($product['price']) ?>
-                                </a>
-                                <a href="#" class="btn cart" role="button">
-                                    <span class="glyphicon glyphicon-shopping-cart">
-                                    </span>
-                                </a>
-                            </p>
+                    <div id="cardHolder" class="col-md-3">
+                        <div class="card">
+                            <img src="<?php echo htmlspecialchars($product['imagePath']) ?>"
+                                alt="<?php echo htmlspecialchars($product['itemName']) ?>" class="img-responsive">
+                            <div class="caption">
+                                <h3 id="productLabel">
+                                    <?php echo htmlspecialchars($product['itemName']) ?>
+                                </h3>
+                                <p id="productDesc">
+                                    <?php echo htmlspecialchars($product['description']) ?>
+                                </p>
+                                <p class="btnHolder">
+                                    <a href="#" class="btn buy" role="button">₱
+                                        <?php echo htmlspecialchars($product['price']) ?>
+                                    </a>
+                                    <a href="#" class="btn cart" role="button">
+                                        <span class="glyphicon glyphicon-shopping-cart">
+                                        </span>
+                                    </a>
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-            <?php }
+                <?php }
 
             ?>
 
         </div>
-
-
 
 
     </div>

@@ -1,3 +1,8 @@
+<?php
+session_start();
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,24 +23,40 @@
     <!-- NAVIGATION MENU -->
     <ul class="nav-links">
 
-        <input type="checkbox" id="checkbox_toggle" />
-        <label for="checkbox_toggle" class="hamburger">&#9776;</label>
+      <input type="checkbox" id="checkbox_toggle" />
+      <label for="checkbox_toggle" class="hamburger">&#9776;</label>
 
-        <!-- NAVIGATION MENUS -->
-        <div class="menu">
+      <!-- NAVIGATION MENUS -->
+      <div class="menu">
 
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About Us</a></li>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About Us</a></li>
 
-            <li>
-                <a href="pages/products.php">Products</a>
-            </li>
+        <li>
+          <a href="pages/products.php">Shop</a>
+        </li>
 
-            <li><a href="pages/customercare.html">Contact</a></li>
-            <li><a href="pages/login.html">Log in</a></li>
-        </div>
+        <li><a href="pages/customercare.php">Contact</a></li>
+        <li><a
+            href="<?php
+            if (!isset($_SESSION['username'])) {
+              echo htmlspecialchars("pages/login.php");
+            } else {
+              if ($_SESSION['role'] == "admin" ) {
+                echo htmlspecialchars("pages/admin/admin.php");
+              } else {
+                echo htmlspecialchars("pages/profile.php");
+              }
+            } ?>">
+            <?php if (!isset($_SESSION['username'])) {
+              echo htmlspecialchars("Log In");
+            } else {
+              echo htmlspecialchars("Profile");
+            } ?>
+          </a></li>
+      </div>
     </ul>
-</nav>
+  </nav>
 
 
   <div class="bodyholder">
@@ -45,7 +66,7 @@
       <div class="spotlight-dark" style="background-image: url('assets/Images/1.png');">
         <div class="overlaytextcontainer">
           <div class="overlaytext bottomTitle">
-            <h4>GIZMOVERSE</h4>
+            <h4><?php if(!isset($_SESSION["username"])){echo htmlspecialchars("GIZMOVERSE");}else{echo htmlspecialchars("Welcome ".$_SESSION["username"]);} ?></h4>
             <h1>Where your gadgets align with<br>the universe</h1>
           </div>
         </div>
@@ -54,7 +75,7 @@
       <div class="spotlight-light" style="background-image: url('assets/Images/2.png');">
         <div class="overlaytextcontainer">
           <div class="overlaytext bottomTitle">
-            <h4>GIZMOVERSE</h4>
+          <h4><?php if(!isset($_SESSION["username"])){echo htmlspecialchars("GIZMOVERSE");}else{echo htmlspecialchars("Welcome ".$_SESSION["username"]);} ?></h4>
             <h1>Where your gadgets align with<br>your heart</h1>
           </div>
         </div>

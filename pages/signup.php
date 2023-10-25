@@ -19,7 +19,7 @@
     
         <div class="formHolder">
 
-            <div class="logo center"><a href="../index.html">GIZMOVERSE</a></div>
+            <div class="logo center"><a href="../index.php">GIZMOVERSE</a></div>
 
             <h3 style="padding-bottom: 25px; text-align: center;">Sign up</h3>
             
@@ -55,7 +55,7 @@
 
                 <div></div>
 
-                <a href="login.html"><button type="button" class="loginBtn">Already have an account.</button></a>
+                <a href="login.php"><button type="button" class="loginBtn">Already have an account.</button></a>
 
 
             </form>

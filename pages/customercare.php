@@ -18,7 +18,7 @@
 
         <div class="formHolder customer-care">
 
-            <div class="logo login"><a href="../index.html">We're here to help</a></div>
+            <div class="logo center"><a href="../index.php">We're here to help</a></div>
 
             <p>We love hearing from from our customers and we value your feedback. Send us your questions, comments or feedback so we can serve you better.</p>
 
@@ -44,7 +44,7 @@
                     <textarea id="inputConcern" rows="4" cols="50" placeholder="Please enter query"></textarea>
                 </div>
                 <div></div>
-                <a href="../index.html"><button type="button" class="loginBtn submit">Submit</button></a>
+                <a href="../index.php"><button type="button" class="loginBtn submit">Submit</button></a>
                 <label class="warning" id="warningTextLogIn"></label>
 
 

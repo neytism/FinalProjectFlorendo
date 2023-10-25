@@ -1,3 +1,11 @@
+<?php 
+	session_start(); 
+
+	if (isset($_SESSION['username'])) {
+		header('location: ../index.php');
+	}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,29 +24,27 @@
 
     <div class="bodyholder login" style="background-image: url('../assets/Images/WebBackground3.png');">
 
-    
+
         <div class="formHolder">
 
-            <div class="logo center"><a href="../index.html">GIZMOVERSE</a></div>
+            <div class="logo center"><a href="../index.php">GIZMOVERSE</a></div>
 
             <h3 style="padding-bottom: 25px; text-align: center;">Login</h3>
 
             <form id="loginForm">
                 <div>
-
-                    <input type="text" id="inputUserName" placeholder="UserName">
+                    <input type="text" id="inputUserName" placeholder="Username" required>
                 </div>
                 <div>
-                    
-                    <input type="password" id="inputPassword" placeholder="Password">
+                    <input type="password" id="inputPassword" placeholder="Password" required>
                 </div>
                 <div></div>
-                <button type="submit" class="loginBtn submit" onclick="checkLogin(event)" >Login</button>
-                <label  class="warning" id="warningTextLogIn"></label>
+                <button type="submit" class="loginBtn submit" onclick="checkLogin(event)">Login</button>
+                <label class="warning" id="warningTextLogIn"></label>
 
                 <div></div>
 
-                <a href="signup.html"><button type="button" class="loginBtn">Don't have an account.</button></a>
+                <a href="signup.php"><button type="button" class="loginBtn">Don't have an account.</button></a>
 
 
             </form>

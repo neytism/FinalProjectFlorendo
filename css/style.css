@@ -406,9 +406,6 @@ input[type=checkbox] {
     color: white;
 }
 
-
-
-
 /* MEDIA QUERIES */
 @media (max-width: 768px) {
     .menu {
