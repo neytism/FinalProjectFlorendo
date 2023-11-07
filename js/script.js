@@ -47,9 +47,16 @@ function checkLogin(event) {
     xhr.open('POST', 'loginAction.php', true);
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhr.onload = function() {
-        ChangeText(warningText, this.responseText);
+        
         if(this.responseText == "success"){
-            document.location.href = '../index.php';
+
+            ChangeText(warningText, "Redirecting you to home page...", "rgba(37, 255, 37, 0.13)");
+            setTimeout(function(){
+                document.location.href = '../index.php';
+           }, 2000); 
+
+        } else{
+            ChangeText(warningText, this.responseText,"rgba(255, 37, 37, 0.13)");
         }
     };
 
@@ -57,7 +64,9 @@ function checkLogin(event) {
 
   };
 
-function checkSignUp() {
+function checkSignUp(event) {
+    event.preventDefault();
+    
     let warningText = document.getElementById("warningTextLogIn");
 
     let username = document.getElementById("inputUserName").value;
@@ -73,9 +82,15 @@ function checkSignUp() {
     xhr.open('POST', 'signupAction.php', true);
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhr.onload = function() {
-        ChangeText(warningText, this.responseText);
+        
         if(this.responseText == "success"){
-            document.location.href = 'login.php';
+            ChangeText(warningText, this.responseText, "rgba(37, 255, 37, 0.13)");
+            setTimeout(function(){
+                document.location.href = 'login.php';
+           },2000); 
+
+        } else{
+            ChangeText(warningText, this.responseText, "rgba(255, 37, 37, 0.13)");
         }
     };
 
@@ -135,8 +150,9 @@ function IsExceedCharacter(text, max) {
     }
 }
 
-function ChangeText(textHolder, textString) {
+function ChangeText(textHolder, textString, color) {
 
+    textHolder.style.backgroundColor = color;
     textHolder.style.display = "block";
     textHolder.innerHTML = textString;
 }

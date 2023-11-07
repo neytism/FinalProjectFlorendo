@@ -234,6 +234,7 @@ input[type=checkbox] {
     width: 100%;
 }
 
+
 .formHolder {
     font-family: Nord-Medium;
     letter-spacing: 2px;
@@ -266,7 +267,8 @@ input[type=checkbox] {
 }
 
 .formHolder input:-webkit-autofill {
-    -webkit-text-fill-color: white;
+    -webkit-box-shadow:0 0 0 50px rgba(0, 0, 0) inset; 
+    -webkit-text-fill-color: #ffffff;
 }
 .formHolderinput:-webkit-autofill:focus {
     -webkit-text-fill-color:  white;

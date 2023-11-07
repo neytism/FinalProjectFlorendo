@@ -30,7 +30,7 @@
 
 <body style="background-color: rgb(10, 10, 10);">
 
-    <nav class="navigationbar sticky">
+    <nav class="navigationbar">
         <!-- LOGO -->
         <div class="logo"><a href="#"><?php echo htmlspecialchars($_SESSION["username"]) ?></a></div>
 
@@ -48,6 +48,55 @@
             </div>
         </ul>
     </nav>
+
+     <div class="bodyholder login" style="background-image: url('../assets/Images/WebBackground3.png');">
+
+
+        <div class="formHolder" style = "width: 90vh;">
+
+            <div class="logo center"><a href="../index.php">Profile</a></div>
+
+            <div style="padding-bottom: 25px; padding-left: 25px;">
+
+                <h3 style= "display: inline-block;">Username: </h3>
+                <h3 style= "display: inline-block; padding-left: 25px;"> Show username Here </h3>
+        
+            </div>
+
+            <div style="padding-bottom: 25px; padding-left: 25px;">
+
+                <h3 style= "display: inline-block;">First Name: </h3>
+                <h3 style= "display: inline-block; padding-left: 25px;"> Show First Name Here </h3>
+        
+            </div>
+
+            <div style="padding-bottom: 25px; padding-left: 25px;">
+
+                <h3 style= "display: inline-block;">Last Name: </h3>
+                <h3 style= "display: inline-block; padding-left: 25px;"> Show Last Name Here </h3>
+        
+            </div>
+
+            <div style="padding-bottom: 25px; padding-left: 25px;">
+
+                <h3 style= "display: inline-block;">Last Name: </h3>
+                <h3 style= "display: inline-block; padding-left: 25px;"> Show Last Name Here </h3>
+
+            </div>
+
+            <div style="padding-bottom: 25px; padding-left: 25px;">
+
+                <h3 style= "display: inline-block;">Last Name: </h3>
+                <h3 style= "display: inline-block; padding-left: 25px;"> Show Last Name Here </h3>
+
+            </div>
+            
+
+            
+
+        </div>
+
+    </div>
 
     
     <script type="text/javascript" src="../js/script.js" id="rendered-js"></script>
