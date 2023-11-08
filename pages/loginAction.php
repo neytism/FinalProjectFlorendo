@@ -31,7 +31,7 @@ if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
         if ($row["password"] == $pword)
         {
-          $_SESSION['username'] = $uname;
+          $_SESSION['user_id'] = $row["user_id"];
           $_SESSION['role'] = $row["role"];
             echo "success";
         }else {

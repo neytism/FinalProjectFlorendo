@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -12,7 +14,7 @@ if (!$conn) {
     echo 'Connection error: ' . mysqli_connect_error();
 }
 
-$sql = 'SELECT itemName, description, imagePath, price, stock FROM products';
+$sql = 'SELECT product_id, itemName, description, imagePath, price, stock FROM products';
 
 $result = mysqli_query($conn, $sql);
 
@@ -36,6 +38,10 @@ $products = mysqli_fetch_all($result, MYSQLI_ASSOC);
 </head>
 
 <body style="background-color: rgb(10, 10, 10);">
+
+    <div class="notification" id="notification">
+        <p style="padding: 10px 20px; margin:0;">Item Added to Cart</p>
+    </div>
 
     <nav class="navigationbar sticky">
         <!-- LOGO -->
@@ -68,24 +74,30 @@ $products = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
             <?php
 
-                foreach ($products as $product) { ?>
+            foreach ($products as $product) { ?>
 
-                    <div id="cardHolder" class="cardHolder col-md-3">
-                        <div class="card">
-                            <img src="<?php echo htmlspecialchars($product['imagePath']) ?>"
-                                alt="<?php echo htmlspecialchars($product['itemName']) ?>" class="img-responsive">
-                            <div class="caption">
-                                <h3 id="productLabel" class="productLabel">
-                                    <?php echo htmlspecialchars($product['itemName']) ?>
-                                </h3>
-                                <p id="productDesc" class="productDesc">
-                                    <?php echo htmlspecialchars($product['description']) ?>
-                                </p>
-                                <p class="btnHolder">
-                                    <a href="#" class="btn buy" role="button">₱
-                                        <?php echo htmlspecialchars($product['price']) ?>
-                                    </a>
-                                    <a href="#" class="btn cart" role="button">
+                <div id="cardHolder" class="cardHolder col-md-3">
+                    <div class="card">
+                        <img src="<?php echo htmlspecialchars($product['imagePath']) ?>"
+                            alt="<?php echo htmlspecialchars($product['description']) ?>" class="img-responsive">
+                        <div class="caption">
+                            <h3 id="productLabel" class="productLabel name alt">
+                                <?php echo htmlspecialchars($product['itemName']) ?>
+                            </h3>
+                            <p id="productDesc" class="productDesc description">
+                                <?php echo htmlspecialchars($product['description']) ?>
+                            </p>
+                            <p class="btnHolder">
+                                <a href="#" class="btn buy" role="button">₱
+                                    <?php echo htmlspecialchars($product['price']) ?>
+                                </a>
+                               
+                                <a class="btn cart" role="button" <?php if (!isset($_SESSION["user_id"])) {
+                                        echo 'href="login.php"';
+                                    } else {
+                                        echo 'onclick="addToCart(event,' . $product['product_id'] . ')"';
+                                    } ?>>
+                                
                                         <span class="glyphicon glyphicon-shopping-cart">
                                         </span>
                                     </a>
@@ -94,7 +106,7 @@ $products = mysqli_fetch_all($result, MYSQLI_ASSOC);
                         </div>
                     </div>
 
-                <?php }
+            <?php }
 
             ?>
 

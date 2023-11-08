@@ -13,20 +13,20 @@ window.addEventListener('mousemove', function (e) {
     }
 });
 
-//for searc
+//for search
 $(document).ready(function(){
     $("#search").on("keyup", function() {
         var value = $(this).val().toLowerCase();
 
         $(".cardHolder").each(function() {
             var card = $(this);
-            var productLabel = card.find(".productLabel").text().toLowerCase();
-            var productDesc = card.find(".productDesc").text().toLowerCase();
-            var altText = card.find("img").attr('alt').toLowerCase();
+            var listName = card.find(".name").text().toLowerCase();
+            var listLabel = card.find(".alt").text().toLowerCase();
+            var listDesc = card.find(".description").text().toLowerCase();
 
-            var isSearchMatch = (productLabel.indexOf(value) > -1) ||
-                               (productDesc.indexOf(value) > -1) ||
-                               (altText.indexOf(value) > -1);
+            var isSearchMatch = (listName.indexOf(value) > -1) ||
+                               (listLabel.indexOf(value) > -1) ||
+                               (listDesc.indexOf(value) > -1);
 
             card.toggle(isSearchMatch);
         });
@@ -34,8 +34,6 @@ $(document).ready(function(){
 });
 
 //for Login
-
-
 function checkLogin(event) {
     event.preventDefault();
   
@@ -65,6 +63,7 @@ function checkLogin(event) {
 
   };
 
+  //for Signup
 function checkSignUp(event) {
     event.preventDefault();
     
@@ -97,43 +96,63 @@ function checkSignUp(event) {
 
     xhr.send('uname=' + username + '&fname=' + firstName + '&lname=' + lastName + '&email=' + email + '&phone=' + phone + '&address=' + address + '&pword=' + password + '&rpword=' + repeatPassword);
 
-
-    // if (username == "") {
-    //     ChangeText(warningText, "Username can't be empty.");
-    //     return;
-    // } else if (username.toLowerCase() == testName.toLowerCase()) {
-    //     //check here if username is taken
-    //     ChangeText(warningText, "Username is taken.");
-    //     return;
-    // }
-    
-    // if (userNameHasSpecialCharacter && userNameExceedsCharacters) {
-    //     ChangeText(warningText, "The username must be atleast 8 characters and must not contain special character/s");
-    //     return;
-    // } else if (userNameHasSpecialCharacter) {
-    //     ChangeText(warningText, "must not contain special character/s or spaces.");
-    //     return;
-    // } else if (userNameExceedsCharacters) {
-    //     ChangeText(warningText, "The username must be atleast 8 characters.");
-    //     return;
-    // }
-    
-    // if (password == "") {
-    //     ChangeText(warningText, "Password can't be empty.");
-    //     return;
-    // } else if(IsExceedCharacter(password,8)){
-    //     ChangeText(warningText, "Password must be atleast 8 characters.");
-    //     return;
-    // }
-
-    // if(password != repeatPassword){
-    //     ChangeText(warningText, "Password did not match.");
-    //     return;
-    // }
-
-    // ChangeText(warningText, "ACCOUNT CREATED");
-    //add account to database
 }
+
+
+//add product
+function checkAddProd(event) {
+    event.preventDefault();
+
+    let warningText = document.getElementById("warningText");
+    
+    let itemName = document.getElementById("inputItemName").value;
+    let itemDesc = document.getElementById("inputItemDescription").value;
+    let itemImage = document.getElementById("inputItemImage").files[0];
+    let itemPrice = document.getElementById("inputItemPrice").value;
+    let itemStock = document.getElementById("inputItemStock").value;
+
+    let formData = new FormData();
+    formData.append('itemName', itemName);
+    formData.append('itemDesc', itemDesc);
+    formData.append('itemImage', itemImage);
+    formData.append('itemPrice', itemPrice);
+    formData.append('itemStock', itemStock);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'productAdd.php', true);
+    xhr.onload = function() {
+        if(this.responseText.trim() == "success"){
+            ChangeText(warningText, this.responseText, "rgba(37, 255, 37, 0.13)");
+            setTimeout(function(){
+                document.location.href = 'productList.php';
+           },2000); 
+        } else{
+            ChangeText(warningText, this.responseText, "rgba(255, 37, 37, 0.13)");
+        }
+    };
+
+    xhr.send(formData);
+}
+
+//add to cart
+function addToCart(event, itemID) {
+    event.preventDefault();
+
+    var element = document.getElementById("notification");
+    element.classList.remove("fadeInOut");
+    void element.offsetWidth;
+    element.classList.add("fadeInOut");
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'addToCartAction.php', true);
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+    xhr.send('itemID=' + itemID);
+
+
+
+}
+
 
 
 function HasSpecialCharacter(text) {

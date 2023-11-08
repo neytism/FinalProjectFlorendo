@@ -1,7 +1,7 @@
 <?php 
 	session_start(); 
 
-	if (!isset($_SESSION['username'])) {
+	if (!isset($_SESSION['user_id'])) {
 		header('location: login.php');
 	}
 
@@ -11,7 +11,7 @@
 
 	if (isset($_GET['logout'])) {
 		session_destroy();
-		unset($_SESSION['username']);
+		unset($_SESSION['user_id']);
         unset($_SESSION['role']);
 		header("location: ../index.php");
 	}
@@ -48,7 +48,7 @@
             <div class="menu">
                 <li><a href="../../index.php">Home</a></li>
                 <li><a href="productList.php">Product List</a></li>
-                <li><a href="#">User List</a></li>
+                <li><a href="userList.php">User List</a></li>
                 <li><a href="../profile.php?logout='1'" style="color: red;">Log out</a></li>
             </div>
         </ul>

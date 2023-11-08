@@ -1,6 +1,36 @@
 <?php
 session_start();
 
+
+if (isset($_SESSION["user_id"])) {
+  
+  $servername = "localhost";
+  $username = "root";
+  $password = "";
+  $dbname = "onlinestore";
+
+  $name = '';
+
+  // Create connection
+  $conn = new mysqli($servername, $username, $password, $dbname);
+
+  // Check connection
+  if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+  }
+
+  $sql = "SELECT * FROM profile WHERE user_id = '$_SESSION[user_id]'";
+
+  $result = $conn->query($sql);
+
+  while ($row = $result->fetch_assoc()) {
+
+    $name = $row["username"];
+
+  }
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -39,7 +69,7 @@ session_start();
         <li><a href="pages/customercare.php">Contact</a></li>
         <li><a
             href="<?php
-            if (!isset($_SESSION['username'])) {
+            if (!isset($_SESSION['user_id'])) {
               echo htmlspecialchars("pages/login.php");
             } else {
               if ($_SESSION['role'] == "admin" ) {
@@ -48,7 +78,7 @@ session_start();
                 echo htmlspecialchars("pages/profile.php");
               }
             } ?>">
-            <?php if (!isset($_SESSION['username'])) {
+            <?php if (!isset($_SESSION['user_id'])) {
               echo htmlspecialchars("Log In");
             } else {
               echo htmlspecialchars("Profile");
@@ -66,7 +96,7 @@ session_start();
       <div class="spotlight-dark" style="background-image: url('assets/Images/1.png');">
         <div class="overlaytextcontainer">
           <div class="overlaytext bottomTitle">
-            <h4><?php if(!isset($_SESSION["username"])){echo htmlspecialchars("GIZMOVERSE");}else{echo htmlspecialchars("Welcome ".$_SESSION["username"]);} ?></h4>
+            <h4><?php if(!isset($_SESSION["user_id"])){echo htmlspecialchars("GIZMOVERSE");}else{echo htmlspecialchars("Welcome ".$name);} ?></h4>
             <h1>Where your gadgets align with<br>the universe</h1>
           </div>
         </div>
@@ -75,7 +105,7 @@ session_start();
       <div class="spotlight-light" style="background-image: url('assets/Images/2.png');">
         <div class="overlaytextcontainer">
           <div class="overlaytext bottomTitle">
-          <h4><?php if(!isset($_SESSION["username"])){echo htmlspecialchars("GIZMOVERSE");}else{echo htmlspecialchars("Welcome ".$_SESSION["username"]);} ?></h4>
+          <h4><?php if(!isset($_SESSION["user_id"])){echo htmlspecialchars("GIZMOVERSE");}else{echo htmlspecialchars("Welcome ".$name);} ?></h4>
             <h1>Where your gadgets align with<br>your heart</h1>
           </div>
         </div>

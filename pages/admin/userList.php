@@ -29,13 +29,11 @@ if (!$conn) {
     echo 'Connection error: ' . mysqli_connect_error();
 }
 
-$sql = 'SELECT product_id, itemName, description, imagePath, price, stock FROM products';
+$sql = 'SELECT user_id, username, firstName, lastName, email, mobile, address FROM profile';
 
 $result = mysqli_query($conn, $sql);
 
-$products = mysqli_fetch_all($result, MYSQLI_ASSOC);
-
-
+$profiles = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
 ?>
 
@@ -50,14 +48,14 @@ $products = mysqli_fetch_all($result, MYSQLI_ASSOC);
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <title>Products</title>
+    <title>Users</title>
 </head>
 
 <body style="background-color: rgb(10, 10, 10);">
 
     <nav class="navigationbar sticky">
         <!-- LOGO -->
-        <div class="logo"><a href="#">PRODUCT LIST</a></div>
+        <div class="logo"><a href="#">USERS LIST</a></div>
 
         <!-- NAVIGATION MENU -->
         <ul class="nav-links">
@@ -68,7 +66,6 @@ $products = mysqli_fetch_all($result, MYSQLI_ASSOC);
             <!-- NAVIGATION MENUS -->
             <div class="menu">
                 <li><a href="../../index.php">Home</a></li>
-                <li><a href="productAdd.php">Add Product</a></li>
                 <li><a href="admin.php">Admin</a></li>
             </div>
         </ul>
@@ -85,12 +82,11 @@ $products = mysqli_fetch_all($result, MYSQLI_ASSOC);
                 <thead style="height: 60px;">
                     <tr style="letter-spacing: 1px;">
                         <th scope="col">ID</th>
-                        <th scope="col">IMAGE</th>
-                        <th scope="col">ITEM NAME</th>
-                        <th scope="col">DESCRIPTION</th>
-                        <th scope="col">IMAGE PATH</th>
-                        <th scope="col">STOCK</th>
-                        <th scope="col">PRICE</th>
+                        <th scope="col">USERNAME</th>
+                        <th scope="col">NAME</th>
+                        <th scope="col">EMAIL</th>
+                        <th scope="col">CONTACT</th>
+                        <th scope="col">ADDRESS</th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
@@ -98,17 +94,15 @@ $products = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
                     <?php
 
-                    foreach ($products as $product) { ?>
+                    foreach ($profiles as $profile) { ?>
 
-                        <tr class="cardHolder" >
-                            <th  scope="row"><?php echo htmlspecialchars($product['product_id']) ?></th>
-                            <td ><img src="../<?php echo htmlspecialchars($product['imagePath']) ?>"
-                                    style="height: 100px; width: auto;" alt="<?php echo htmlspecialchars($product['description']) ?>"></td>
-                            <td class="name" ><?php echo htmlspecialchars($product['itemName']) ?></td>
-                            <td class="description alt"><?php echo htmlspecialchars($product['description']) ?></td>
-                            <td ><?php echo htmlspecialchars($product['imagePath']) ?></td>
-                            <td ><?php echo htmlspecialchars($product['stock']) ?></td>
-                            <td >₱ <?php echo htmlspecialchars($product['price']) ?></td>
+                        <tr class="cardHolder" style="height: 60px;">
+                            <th scope="row"><?php echo htmlspecialchars($profile['user_id']) ?></th>
+                            <td class="name"><?php echo htmlspecialchars($profile['username']) ?></td>
+                            <td class="alt"><?php echo htmlspecialchars($profile['lastName'].", ".$profile['firstName']) ?></td>
+                            <td class="description"><?php echo htmlspecialchars($profile['email']) ?></td>
+                            <td ><?php echo htmlspecialchars($profile['mobile']) ?></td>
+                            <td ><?php echo htmlspecialchars($profile['address']) ?></td>
                             <td ><a href="#" class="btn cart"
                                     style="color: white; background-color: gray;" role="button">edit</a></td>
                         </tr>

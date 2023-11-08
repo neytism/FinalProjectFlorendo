@@ -270,11 +270,26 @@ input[type=checkbox] {
     -webkit-box-shadow:0 0 0 50px rgba(0, 0, 0) inset; 
     -webkit-text-fill-color: #ffffff;
 }
-.formHolderinput:-webkit-autofill:focus {
+.formHolder input:-webkit-autofill:focus {
     -webkit-text-fill-color:  white;
 }
 
-
+.formHolder input[type="file"]::file-selector-button {
+    font-family: LaachirDeeper !important;
+    font-size: smaller;
+    color: white;
+    margin-right: 20px;
+    border: 2px solid #a5a5a5;
+    background-color: #ffffff00;
+    border-radius: 10px;
+    transition: 0.5s;
+  }
+  
+  .formHolder input[type="file"]::file-selector-button:hover {
+    color: black;
+    background-color: #ffffff;
+    border: 2px solid #888888;
+  }
 
 .formHolder label {
     padding-bottom: 5px;
@@ -317,6 +332,18 @@ input[type=checkbox] {
    color: black;
 }
 
+.loginBtn.cancel {
+    background-color: rgba(192, 0, 0, 0.308);
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.loginBtn.cancel:hover {
+   background-color: rgba(190, 0, 0, 0.644);
+   color: black;
+}
+
 
 .loginBtn:hover {
     background-color: rgba(255, 255, 255, 0.281);
@@ -345,11 +372,14 @@ input[type=checkbox] {
 .products .card{
     position: relative;
     background-color:rgb(255, 255, 255); 
-    height: 400px;
+    height: 500px;
     min-width: 250px;
     border-radius: 15px; 
     padding: 15px 25px;
     margin: 15px 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .products .card img{
@@ -406,6 +436,70 @@ input[type=checkbox] {
     padding: 30px;
     border: none;
     color: white;
+}
+
+.myTable {
+    border-collapse: separate;
+    border-spacing: 0px 20px;
+    color: black;
+}
+
+.myTable tbody,
+thead {
+    background-color: white;
+}
+
+.myTable td,
+th {
+    vertical-align: middle !important;
+    border-top: 0 !important;
+}
+
+.myTable td:first-child,
+th:first-child {
+    border-radius: 20px 0 0 20px;
+    padding-left: 30px !important;
+}
+
+.myTable td:last-child,
+th:last-child {
+    border-radius: 0 20px 20px 0;
+}
+
+.notification{
+    background-color: green; 
+    border-radius: 10px;
+    color: white; 
+    position: fixed; 
+    bottom: 3%; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    z-index: 100; 
+    opacity: 0;
+}
+
+.fadeInOut{
+    animation-name: notification;
+    animation-duration: 2s;
+    animation-timing-function: ease-in-out;
+}
+
+@keyframes notification {
+    0%{
+        opacity: 0;
+    }
+
+    30% {
+        opacity: 1;
+    }
+
+    80% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
 }
 
 /* MEDIA QUERIES */
