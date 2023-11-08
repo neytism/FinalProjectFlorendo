@@ -153,6 +153,24 @@ function addToCart(event, itemID) {
 
 }
 
+function removeItemFromCart(event, orderID) {
+    event.preventDefault();
+
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'removeItemFromCartAction.php', true);
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+    xhr.onload = function() {
+        if (this.status == 200) {
+        location.reload();
+        }
+    };
+
+    xhr.send('orderID=' + orderID);
+
+}
+
 
 
 function HasSpecialCharacter(text) {

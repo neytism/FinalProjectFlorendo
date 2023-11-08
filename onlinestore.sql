@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 31, 2023 at 06:51 AM
+-- Generation Time: Nov 09, 2023 at 12:41 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -54,7 +54,12 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`product_id`, `itemName`, `imagePath`, `description`, `price`, `stock`) VALUES
-(2, 'iPhone', '../assets/Images/iphone.png', 'custom iPhone skin.', 99.99, 21);
+(1, 'iPad Titanium', '../assets/Images/ipad.png', 'Custom Titanium Gray back skin for iPad current Gen.', 99.99, 12),
+(2, 'iPhone', '../assets/Images/iphone.png', 'custom iPhone skin.', 99.99, 21),
+(3, 'Nintendo Switch', '../assets/Images/switch.png', 'custom Switch skins.', 69.99, 12),
+(4, 'PS5 Skin', '../assets/Images/ps5.png', 'PS5 custom skin', 69.99, 3),
+(5, 'Xbox Cool Metal', '../assets/Images/xbox.png', 'Xbox Series X Cool Metal that looks cool and will keep you console cool.', 99.99, 18),
+(6, 'MacBook Brushed Aluminum', '../assets/Images/macbook.png', 'Custom MacBook Skin that is lighter and cooler.', 99.99, 22);
 
 -- --------------------------------------------------------
 
@@ -79,8 +84,8 @@ CREATE TABLE `profile` (
 --
 
 INSERT INTO `profile` (`user_id`, `username`, `password`, `firstName`, `lastName`, `email`, `mobile`, `address`, `role`) VALUES
-(1, 'neytism', 'Password01!', 'Nate', 'Florendo', 'nate.florendo@ciit.edu.ph', '09123456789', 'Antipolo City', 'admin'),
-(2, 'stevejobs', 'Password01!', 'Steve', 'Jobs', 'SteveJobs@gmail.com', '09012345678', 'United Stated of America', 'user');
+(1, 'admin', 'asdfasdf', 'Nate', 'Florendo', 'nate.florendo@ciit.edu.ph', '09123456789', 'Antipolo City', 'admin'),
+(2, 'DummyUser', 'asdfasdf', 'Dummy ', 'User', 'DummyUser@gmail.com', '09012345678', 'United States of America', 'user');
 
 --
 -- Indexes for dumped tables
@@ -114,13 +119,13 @@ ALTER TABLE `profile`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `profile`
