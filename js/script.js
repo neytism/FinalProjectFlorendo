@@ -14,20 +14,21 @@ window.addEventListener('mousemove', function (e) {
 });
 
 //for searc
-
 $(document).ready(function(){
     $("#search").on("keyup", function() {
-        //checks if the search field is empty or not
         var value = $(this).val().toLowerCase();
 
-        $("#cardHolder").each(function() {
+        $(".cardHolder").each(function() {
             var card = $(this);
-            var isSearchMatch = 
-                card.find("#productLabel").text().toLowerCase().indexOf(value) > -1 ||
-                card.find("#productDesc").text().toLowerCase().indexOf(value) > -1 || 
-                card.find("img").attr('alt').toLowerCase().indexOf(value) > -1;
+            var productLabel = card.find(".productLabel").text().toLowerCase();
+            var productDesc = card.find(".productDesc").text().toLowerCase();
+            var altText = card.find("img").attr('alt').toLowerCase();
 
-            card.parent().toggle(isSearchMatch);
+            var isSearchMatch = (productLabel.indexOf(value) > -1) ||
+                               (productDesc.indexOf(value) > -1) ||
+                               (altText.indexOf(value) > -1);
+
+            card.toggle(isSearchMatch);
         });
     });
 });

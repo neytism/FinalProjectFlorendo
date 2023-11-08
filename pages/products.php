@@ -70,15 +70,15 @@ $products = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
                 foreach ($products as $product) { ?>
 
-                    <div id="cardHolder" class="col-md-3">
+                    <div id="cardHolder" class="cardHolder col-md-3">
                         <div class="card">
                             <img src="<?php echo htmlspecialchars($product['imagePath']) ?>"
                                 alt="<?php echo htmlspecialchars($product['itemName']) ?>" class="img-responsive">
                             <div class="caption">
-                                <h3 id="productLabel">
+                                <h3 id="productLabel" class="productLabel">
                                     <?php echo htmlspecialchars($product['itemName']) ?>
                                 </h3>
-                                <p id="productDesc">
+                                <p id="productDesc" class="productDesc">
                                     <?php echo htmlspecialchars($product['description']) ?>
                                 </p>
                                 <p class="btnHolder">
