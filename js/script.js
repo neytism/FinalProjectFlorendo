@@ -149,10 +149,9 @@ function addToCart(event, itemID) {
 
     xhr.send('itemID=' + itemID);
 
-
-
 }
 
+//for cart
 function removeItemFromCart(event, orderID) {
     event.preventDefault();
 
@@ -164,12 +163,53 @@ function removeItemFromCart(event, orderID) {
     xhr.onload = function() {
         if (this.status == 200) {
         location.reload();
+        
         }
     };
 
     xhr.send('orderID=' + orderID);
 
 }
+
+
+var checkboxes = document.querySelectorAll('input.cart-checkbox[type="checkbox"]');
+
+
+checkboxes.forEach(function (checkbox) {
+    checkbox.addEventListener('change', function () {
+        updateTotalAmount();
+    });
+});
+
+function updateTotalAmount() {
+    var totalAmount = 0;
+    var totalQuantity = 0;
+
+    
+    checkboxes.forEach(function (checkbox) {
+        
+        if (checkbox.checked) {
+            var row = checkbox.closest('tr');
+            var quantity = parseInt(row.querySelector('.quantity').textContent);
+            var price = parseFloat(row.querySelector('.price').textContent.replace('₱', ''));
+
+            // Check if valid numbers
+            if (!isNaN(quantity) && !isNaN(price)) {
+                totalAmount += quantity * price;
+                totalQuantity += quantity;
+            }
+        }
+    });
+
+    if (totalQuantity >= 0) {
+        document.querySelector('.total-amount').textContent = '₱ ' + totalAmount.toFixed(2);
+        document.querySelector('.total-quantity').textContent = 'CHECKOUT (' + totalQuantity + ')';
+    } else {
+        document.querySelector('.total-amount').textContent = 'No items selected';
+        document.querySelector('.total-quantity').textContent = 'CHECKOUT';
+    }
+}
+
 
 
 

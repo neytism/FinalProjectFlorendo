@@ -19,12 +19,18 @@ if (!$conn) {
 }
 
 $userID = $_SESSION['user_id'];
+$totalAmount = 0;
+$totalQuantity = 0;
 
 $sql = "SELECT cart.order_id, cart.product_id, cart.quantity, products.itemName, products.imagePath, products.price FROM cart INNER JOIN products ON cart.product_id = products.product_id WHERE cart.user_id='$userID'";
+
 
 $result = mysqli_query($conn, $sql);
 
 $cartItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -43,14 +49,18 @@ $cartItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
 <body style="background-color: rgb(10, 10, 10);">
 
-<div style="position: fixed; z-index: 100; width:100vw; bottom: 0; height: 100px; background-color: white; box-shadow: 0px -10px 100px black; border-radius: 30px 30px 0px 0px; display: flex; justify-content: space-between; align-items: center; padding: 0 20px;">
-    <div></div>
-    <div style="display: flex; align-items: center;">
-        <h3 style= "margin-right: 20px;">SUBTOTAL: </h3>
-        <h3 style= "margin-right: 50px;">₱ 9999.99</h3>
-        <a href="#" class="btn cart" style="color: white; background-color: gray; margin-right: 30px;" role="button">CHECKOUT</a>
+    <div style="position: fixed; z-index: 100; width:100vw; bottom: 0; height: 100px; background-color: white; box-shadow: 0px -10px 100px black; border-radius: 30px 30px 0px 0px; display: flex; justify-content: space-between; align-items: center; padding: 0 20px;">
+        <div></div>
+        <div style="display: flex; align-items: center; vertical-align: center;">
+            <h3 style="margin-right: 20px;">SUBTOTAL: </h3>
+            <h3 class="total-amount" style="margin-right: 50px;">₱ 0.00</h3>
+            <a href="#" class="total-quantity btn cart"
+                style="color: white; background-color: gray; margin-right: 30px; align-self: center;"
+                role="button">CHECKOUT(0)</a>
+            <h3 style="margin-right: 20px;"></h3>
+        </div>
+
     </div>
-</div>
 
 
 
@@ -73,13 +83,14 @@ $cartItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
         </ul>
     </nav>
 
-    <div class="products" style="padding-bottom: 100px;">
+    <div class="products">
 
         <div class="container table-responsive py-5"
             style="color: black; font-family: LaachirDeeper !important;font-size: larger; width: 100%;">
             <table class="myTable table" id="tableContainer">
                 <thead style="height: 60px;">
                     <tr style="letter-spacing: 1px;">
+                        <th scope="col"></th>
                         <th scope="col"></th>
                         <th scope="col">ITEM NAME</th>
                         <th scope="col">QUANTITY</th>
@@ -91,21 +102,37 @@ $cartItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
                     <?php
                     foreach ($cartItems as $cartItem) { ?>
-                        <tr class="cardHolder">
+                        <tr class="cardHolder" style="height: 85px;">
+                            <td><input class="cart-checkbox" style="display: block; height: 20px;" type="checkbox"
+                                    name="checkbox_<?php echo $cartItem['product_id'] ?>" /></td>
                             <td style="width: 20%;"><img src="<?php echo htmlspecialchars($cartItem['imagePath']) ?>"
-                                    style="height: 75px; width: auto;"
+                                    style="height: auto; width: auto; max-width: 100px; max-height: 80px;"
                                     alt="<?php echo htmlspecialchars($cartItem['itemName']) ?>"></td>
                             <td style="width: 50%;" class="name">
                                 <?php echo htmlspecialchars($cartItem['itemName']) ?>
                             </td>
-                            <td>
+                            <td class="quantity">
                                 <?php echo htmlspecialchars($cartItem['quantity']) ?>
                             </td>
-                            <td>₱
+                            <td class="price">₱
                                 <?php echo htmlspecialchars($cartItem['price']) ?>
                             </td>
-                            <td><a onclick="removeItemFromCart(event,<?php echo $cartItem['order_id'] ?>)" class="btn cart" style="color: white; background-color: gray;"
-                                    role="button">REMOVE</a></td>
+                            <td><a onclick="removeItemFromCart(event,<?php echo $cartItem['order_id'] ?>)" class="btn cart"
+                                    style="color: white; background-color: gray;" role="button">REMOVE</a></td>
+                        </tr>
+                    <?php } ?>
+
+                    <?php
+                    if (count($cartItems) > 0) {
+                        foreach ($cartItems as $cartItem) { ?>
+                            <tr class="cardHolder">
+                                <!-- Your existing table row code here -->
+                            </tr>
+                        <?php }
+                    } else { ?>
+                        <tr>
+                            <td colspan="6" style="text-align: center; border-radius: 20px; background-color: gray;">No
+                                items in your cart</td>
                         </tr>
                     <?php } ?>
 
