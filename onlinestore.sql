@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 10, 2023 at 03:28 PM
+-- Generation Time: Nov 11, 2023 at 12:24 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -39,9 +39,11 @@ CREATE TABLE `cart` (
 --
 
 INSERT INTO `cart` (`order_id`, `product_id`, `quantity`, `user_id`) VALUES
-(33, 2, 1, 1),
-(34, 1, 1, 1),
-(35, 3, 2, 1);
+(34, 1, 7, 1),
+(35, 3, 6, 1),
+(36, 2, 6, 1),
+(37, 5, 6, 1),
+(38, 4, 6, 1);
 
 -- --------------------------------------------------------
 
@@ -63,12 +65,12 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`product_id`, `itemName`, `imagePath`, `description`, `price`, `stock`) VALUES
-(1, 'iPad Titanium', '../assets/Images/ipad.png', 'Custom Titanium Gray back skin for iPad current Gen.', 99.99, 12),
+(1, 'iPad Titanium', '../assets/Images/iPad Titanium.png', 'Custom Titanium Gray back skin for iPad current Gen.', 99.99, 12),
 (2, 'iPhone', '../assets/Images/iphone.png', 'custom iPhone skin.', 99.99, 21),
 (3, 'Nintendo Switch', '../assets/Images/switch.png', 'custom Switch skins.', 69.99, 12),
 (4, 'PS5 Skin', '../assets/Images/ps5.png', 'PS5 custom skin', 69.99, 3),
 (5, 'Xbox Cool Metal', '../assets/Images/xbox.png', 'Xbox Series X Cool Metal that looks cool and will keep you console cool.', 99.99, 18),
-(6, 'MacBook Brushed Aluminum', '../assets/Images/macbook.png', 'Custom MacBook Skin that is lighter and cooler.', 99.99, 22);
+(6, 'MacBook Brushed Aluminum', '../assets/Images/macbook.png', 'Custom MacBook Skin that is lighter and cooler.', 99.99, 3);
 
 -- --------------------------------------------------------
 
@@ -128,19 +130,19 @@ ALTER TABLE `profile`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `profile`
 --
 ALTER TABLE `profile`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Constraints for dumped tables
