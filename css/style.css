@@ -23,6 +23,13 @@ body::-webkit-scrollbar{
     display: none;
   }
 
+.stillBackground{
+    background-image: url('../assets/Images/WebBackground3.png'); 
+    background-repeat: no-repeat; 
+    background-attachment: fixed; 
+    background-size: cover;
+}
+
 a {
     text-decoration: none;
 }
@@ -62,8 +69,9 @@ li {
     color: #fff;
 }
 
-.logo a ,.logo a:hover, .loginBtn a{
+.logo a ,.logo a:hover, .loginBtn a, .navigationbar a, .navigationbar a:hover{
     text-decoration: none !important;
+    color: inherit;
 }
 
 .logo a:visited,
@@ -369,7 +377,7 @@ input[type=checkbox] {
    
 }
 
-.products .card{
+.products .card, .adminCard{
     position: relative;
     background-color:rgb(255, 255, 255); 
     height: 500px;
@@ -436,6 +444,10 @@ input[type=checkbox] {
     padding: 30px;
     border: none;
     color: white;
+}
+
+.cardHolder:last-of-type{
+margin-bottom: 100px;
 }
 
 .myTable {

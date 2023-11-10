@@ -44,8 +44,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $itemDesc = $_POST['itemDesc'];
     $itemPrice = $_POST['itemPrice'];
     $itemStock = $_POST['itemStock'];
-    $itemImage = $_FILES['itemImage'];
-
+    if(isset($_FILES['itemImage'])) {
+        $itemImage = $_FILES['itemImage'];
+    }
+    
     if (empty($itemName)) {
         $errors['itemName'] = '-Item Name is required';
     } else {

@@ -51,7 +51,7 @@ $profiles = mysqli_fetch_all($result, MYSQLI_ASSOC);
     <title>Users</title>
 </head>
 
-<body style="background-color: rgb(10, 10, 10);">
+<body class="stillBackground">
 
     <nav class="navigationbar sticky">
         <!-- LOGO -->

@@ -24,7 +24,6 @@ $totalQuantity = 0;
 
 $sql = "SELECT cart.order_id, cart.product_id, cart.quantity, products.itemName, products.imagePath, products.price FROM cart INNER JOIN products ON cart.product_id = products.product_id WHERE cart.user_id='$userID'";
 
-
 $result = mysqli_query($conn, $sql);
 
 $cartItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
@@ -47,7 +46,7 @@ $cartItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
     <title>Cart</title>
 </head>
 
-<body style="background-color: rgb(10, 10, 10);">
+<body class="stillBackground">
 
     <div style="position: fixed; z-index: 100; width:100vw; bottom: 0; height: 100px; background-color: white; box-shadow: 0px -10px 100px black; border-radius: 30px 30px 0px 0px; display: flex; justify-content: space-between; align-items: center; padding: 0 20px;">
         <div></div>

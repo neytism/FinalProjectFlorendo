@@ -53,7 +53,8 @@ $products = mysqli_fetch_all($result, MYSQLI_ASSOC);
     <title>Products</title>
 </head>
 
-<body style="background-color: rgb(10, 10, 10);">
+<body class="stillBackground">
+
 
     <nav class="navigationbar sticky">
         <!-- LOGO -->
@@ -109,7 +110,7 @@ $products = mysqli_fetch_all($result, MYSQLI_ASSOC);
                             <td ><?php echo htmlspecialchars($product['imagePath']) ?></td>
                             <td ><?php echo htmlspecialchars($product['stock']) ?></td>
                             <td >₱ <?php echo htmlspecialchars($product['price']) ?></td>
-                            <td ><a href="#" class="btn cart"
+                            <td ><a class="btn cart"
                                     style="color: white; background-color: gray;" role="button">edit</a></td>
                         </tr>
                     <?php }

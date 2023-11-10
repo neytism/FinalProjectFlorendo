@@ -213,6 +213,8 @@ function updateTotalAmount() {
 
 
 
+
+
 function HasSpecialCharacter(text) {
     let normalCharacters = /^[A-Za-z0-9]+$/;
 

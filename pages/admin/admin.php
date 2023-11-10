@@ -1,20 +1,20 @@
-<?php 
-	session_start(); 
+<?php
+session_start();
 
-	if (!isset($_SESSION['user_id'])) {
-		header('location: login.php');
-	}
+if (!isset($_SESSION['user_id'])) {
+    header('location: login.php');
+}
 
-    if ($_SESSION['role'] != "admin") {
-		header('location: login.php');
-	}
+if ($_SESSION['role'] != "admin") {
+    header('location: login.php');
+}
 
-	if (isset($_GET['logout'])) {
-		session_destroy();
-		unset($_SESSION['user_id']);
-        unset($_SESSION['role']);
-		header("location: ../index.php");
-	}
+if (isset($_GET['logout'])) {
+    session_destroy();
+    unset($_SESSION['user_id']);
+    unset($_SESSION['role']);
+    header("location: ../index.php");
+}
 
 ?>
 
@@ -32,7 +32,7 @@
     <title>Admin</title>
 </head>
 
-<body style="background-color: rgb(10, 10, 10);">
+<body class="stillBackground">
 
     <nav class="navigationbar sticky">
         <!-- LOGO -->
@@ -52,11 +52,47 @@
         </ul>
     </nav>
 
-    <!-- Buttons in the middle of the screen -->
-    <div style="display: flex; justify-content: center; align-items: center; height: 100vh; margin-top: -80px;">
-        <a href="productList.php" class="btn" style="margin-right: 30px; background-color: white; padding: 30px 0px; width: 250px; box-shadow: 0px 0px 100px rgba(77, 77, 77, 1);">Product List</a>
-        <a href="userList.php" class="btn"style="margin-left: 30px; background-color: white; padding: 30px 0px;width: 250px; box-shadow: 0px 0px 100px rgba(77, 77, 77, 1);" >User List</a>
+    <div class="products">
+
+                <div id="productListEdit" class="col-md-3"> 
+                    <a href="productList.php" style="text-decoration: none;">
+                        <div class="adminCard" style="height: 240px;">
+                        <span class="glyphicon glyphicon-shopping-cart" style="font-size: 130px; text-align: center;"></span>
+                            <div >
+                                <h3>PRODUCT LIST</h3>
+                                <p>Edit product list</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div id="productListEdit" class="col-md-3"> 
+                    <a href="userList.php" style="text-decoration: none;">
+                        <div class="adminCard" style="height: 240px;">
+                        <span class="glyphicon glyphicon-user" style="font-size: 130px; text-align: center;"></span>
+                            <div >
+                                <h3>USER LIST</h3>
+                                <p>Edit user list</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
     </div>
+
+
+
+    <!-- 
+    <div style="display: flex; justify-content: center; align-items: center; height: 100vh; margin-top: -80px;">
+        <a href="productList.php" class="btn"
+            style="margin-right: 30px; background-color: white; padding: 30px 0px; width: 250px; box-shadow: 0px 0px 100px rgba(77, 77, 77, 1);">Product
+            List</a>
+        <a href="userList.php" class="btn"
+            style="margin-left: 30px; background-color: white; padding: 30px 0px;width: 250px; box-shadow: 0px 0px 100px rgba(77, 77, 77, 1);">User
+            List</a>
+    </div>
+     -->
+
 
     <script type="text/javascript" src="../../js/script.js" id="rendered-js"></script>
 

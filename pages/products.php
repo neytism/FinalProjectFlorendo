@@ -20,7 +20,6 @@ $result = mysqli_query($conn, $sql);
 
 $products = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-
 ?>
 
 <!DOCTYPE html>
@@ -37,7 +36,8 @@ $products = mysqli_fetch_all($result, MYSQLI_ASSOC);
     <title>Products</title>
 </head>
 
-<body style="background-color: rgb(10, 10, 10);">
+<body class="stillBackground" >
+
 
     <div class="notification" id="notification">
         <p style="padding: 10px 20px; margin:0;">Item Added to Cart</p>
@@ -63,6 +63,8 @@ $products = mysqli_fetch_all($result, MYSQLI_ASSOC);
         </ul>
     </nav>
 
+    
+
     <div class="products">
 
         <form>
@@ -70,13 +72,13 @@ $products = mysqli_fetch_all($result, MYSQLI_ASSOC);
         </form>
 
 
-        <div id="productsSection">
+        <div id="productsSection" >
 
             <?php
 
             foreach ($products as $product) { ?>
 
-                <div id="cardHolder" class="cardHolder col-md-3">
+                <div id="cardHolder" class="cardHolder col-xs-12 col-sm-6 col-md-3">
                     <div class="card">
                         <img src="<?php echo htmlspecialchars($product['imagePath']) ?>"
                             alt="<?php echo htmlspecialchars($product['description']) ?>" class="img-responsive">
@@ -88,7 +90,7 @@ $products = mysqli_fetch_all($result, MYSQLI_ASSOC);
                                 <?php echo htmlspecialchars($product['description']) ?>
                             </p>
                             <p class="btnHolder">
-                                <a href="#" class="btn buy" role="button">₱
+                                <a href="productFocus.php?productID=<?php echo htmlspecialchars( $product['product_id']) ?>" class="btn buy" role="button">₱
                                     <?php echo htmlspecialchars($product['price']) ?>
                                 </a>
                                
@@ -114,6 +116,7 @@ $products = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
 
     </div>
+    
     <script type="text/javascript" src="../js/script.js" id="rendered-js"></script>
 
 </body>
