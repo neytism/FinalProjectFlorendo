@@ -85,7 +85,7 @@ $cartItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
     <div class="products">
 
         <div class="container table-responsive py-5"
-            style="color: black; font-family: LaachirDeeper !important;font-size: larger; width: 100%;">
+            style="color: black; font-family: LaachirDeeper !important;font-size: larger; width: 100%; margin-bottom: 150px;">
             <table class="myTable table" id="tableContainer">
                 <thead style="height: 60px;">
                     <tr style="letter-spacing: 1px;">
@@ -98,34 +98,29 @@ $cartItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
                     </tr>
                 </thead>
                 <tbody>
-
-                    <?php
-                    foreach ($cartItems as $cartItem) { ?>
-                        <tr class="cardHolder" style="height: 85px;">
-                            <td><input class="cart-checkbox" style="display: block; height: 20px;" type="checkbox"
-                                    name="checkbox_<?php echo $cartItem['product_id'] ?>" /></td>
-                            <td style="width: 20%;"><img src="<?php echo htmlspecialchars($cartItem['imagePath']) ?>"
-                                    style="height: auto; width: auto; max-width: 100px; max-height: 80px;"
-                                    alt="<?php echo htmlspecialchars($cartItem['itemName']) ?>"></td>
-                            <td style="width: 50%;" class="name">
-                                <?php echo htmlspecialchars($cartItem['itemName']) ?>
-                            </td>
-                            <td class="quantity">
-                                <?php echo htmlspecialchars($cartItem['quantity']) ?>
-                            </td>
-                            <td class="price">₱
-                                <?php echo htmlspecialchars($cartItem['price']) ?>
-                            </td>
-                            <td><a onclick="removeItemFromCart(event,<?php echo $cartItem['order_id'] ?>)" class="btn cart"
-                                    style="color: white; background-color: gray;" role="button">REMOVE</a></td>
-                        </tr>
-                    <?php } ?>
-
                     <?php
                     if (count($cartItems) > 0) {
                         foreach ($cartItems as $cartItem) { ?>
-                            <tr class="cardHolder">
-                                <!-- Your existing table row code here -->
+                            <tr class="cardHolder" style="min-height:80px;">
+                                <td><input class="cart-checkbox" style="display: block; height: 20px;" type="checkbox"
+                                        name="checkbox_<?php echo $cartItem['product_id'] ?>" /></td>
+                                <td style="width: 150px;"><img src="<?php echo htmlspecialchars($cartItem['imagePath']) ?>"
+                                        style="height: 80px; width: 80px; object-fit: contain;"
+                                        alt="<?php echo htmlspecialchars($cartItem['itemName']) ?>"></td>
+                                <td style="width: 50%;" class="name">
+                                    <?php echo htmlspecialchars($cartItem['itemName']) ?>
+                                </td>
+                                <td >
+                                    <button class="minus-btn" style="margin-right: 10px; width: 25px;" type="button" name="button" onclick="decreaseQuantity(event,<?php echo $cartItem['order_id'] ?>)">-</button>
+                                    <span class="quantity"><?php echo htmlspecialchars($cartItem['quantity']) ?></span>
+                                    <button class="plus-btn" style="margin-left: 10px; width: 25px;" type="button" name="button" onclick="increaseQuantity(event,<?php echo $cartItem['order_id'] ?>)">+</button>
+                                </td>
+                                
+                                <td class="price">₱
+                                    <?php echo htmlspecialchars($cartItem['price']) ?>
+                                </td>
+                                <td><a onclick="removeItemFromCart(event,<?php echo $cartItem['order_id'] ?>)" class="btn cart"
+                                        style="color: white; background-color: gray;" role="button">REMOVE</a></td>
                             </tr>
                         <?php }
                     } else { ?>
@@ -134,8 +129,8 @@ $cartItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
                                 items in your cart</td>
                         </tr>
                     <?php } ?>
-
                 </tbody>
+            
             </table>
         </div>
 

@@ -29,13 +29,11 @@ if (!$conn) {
     echo 'Connection error: ' . mysqli_connect_error();
 }
 
-$sql = 'SELECT product_id, itemName, description, imagePath, price, stock FROM products';
+$sql = 'SELECT inquiry_id, firstName, lastName, email, contact, inquiry, timeDate FROM inquiries';
 
 $result = mysqli_query($conn, $sql);
 
-$products = mysqli_fetch_all($result, MYSQLI_ASSOC);
-
-
+$inquiries = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
 ?>
 
@@ -50,14 +48,14 @@ $products = mysqli_fetch_all($result, MYSQLI_ASSOC);
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <title>Products</title>
+    <title>Concerns</title>
 </head>
 
 <body class="stillBackground">
-    
+
     <nav class="navigationbar sticky">
         <!-- LOGO -->
-        <div class="logo"><a href="#">PRODUCT LIST</a></div>
+        <div class="logo"><a href="#">CONCERNS LIST</a></div>
 
         <!-- NAVIGATION MENU -->
         <ul class="nav-links">
@@ -68,7 +66,6 @@ $products = mysqli_fetch_all($result, MYSQLI_ASSOC);
             <!-- NAVIGATION MENUS -->
             <div class="menu">
                 <li><a href="../../index.php">Home</a></li>
-                <li><a href="productAdd.php">Add Product</a></li>
                 <li><a href="admin.php">Admin</a></li>
             </div>
         </ul>
@@ -85,34 +82,35 @@ $products = mysqli_fetch_all($result, MYSQLI_ASSOC);
                 <thead style="height: 60px;">
                     <tr style="letter-spacing: 1px;">
                         <th scope="col">ID</th>
-                        <th scope="col">IMAGE</th>
-                        <th scope="col">ITEM NAME</th>
-                        <th scope="col">DESCRIPTION</th>
-                        <th scope="col">IMAGE PATH</th>
-                        <th scope="col">STOCK</th>
-                        <th scope="col">PRICE</th>
+                        <th scope="col">INFO</th>
+                        <th scope="col">CONTENT</th>
+                        <th scope="col">DATE</th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
 
                     <?php
-                    
-                    foreach ($products as $product) { ?>
 
-                        <tr class="cardHolder" >
-                            <th  scope="row"><?php echo htmlspecialchars($product['product_id']) ?></th>
+                    foreach ($inquiries as $inquiry) { ?>
 
-                            <td ><img src="../<?php echo htmlspecialchars($product['imagePath']) ?>"
-                                style="height: 80px; width: 80px; object-fit: contain;" alt="<?php echo htmlspecialchars($product['description']) ?>"></td>
+                        <tr class="cardHolder" style="height: 60px;">
+                            <th scope="row"><?php echo htmlspecialchars($inquiry['inquiry_id']) ?></th>
+                            <td class="alt">
+                                <?php echo htmlspecialchars($inquiry['lastName'].", ".$inquiry['firstName']) ?><br>
+                                <?php echo htmlspecialchars($inquiry['email']) ?><br>
+                                <?php echo htmlspecialchars($inquiry['contact']) ?><br>
+                            </td>
+                            <td class="description" style="max-width: 750px; padding: 25px 0px;"><?php echo htmlspecialchars($inquiry['inquiry']) ?></td>
+                            <td ><?php echo htmlspecialchars($inquiry['timeDate']) ?></td>
+                            <td ><a class="btn cart"
+                                    style="color: white; background-color: gray;" role="button" onclick="deleteInquiry(event,<?php echo $inquiry['inquiry_id'] ?>)">delete</a></td>
+                        </tr>
+                    <?php }
 
-                            <td class="name" ><?php echo htmlspecialchars($product['itemName']) ?></td>
-                            <td class="description alt"><?php echo htmlspecialchars($product['description']) ?></td>
-                            <td ><?php echo htmlspecialchars($product['imagePath']) ?></td>
-                            <td ><?php echo htmlspecialchars($product['stock']) ?></td>
-                            <td >₱ <?php echo htmlspecialchars($product['price']) ?></td>
-                            <td ><a href="productEdit.php?productID=<?php echo $product['product_id'] ?>" class="btn cart"
-                                    style="color: white; background-color: gray;" role="button">edit</a></td>
+                    if (count($inquiries) <= 0) { ?>
+                        <tr>
+                            <td colspan="6" style="text-align: center; border-radius: 20px; background-color: gray; color: white;">no concerns</td>
                         </tr>
                     <?php }
 

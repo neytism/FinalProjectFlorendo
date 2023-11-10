@@ -37,14 +37,14 @@
                 </div>
                 <div>
                     <label>Contact Number</label>
-                    <input type="tel" id="inputNumber" placeholder="Contact Number">
+                    <input type="tel" id="inputPhone" placeholder="Contact Number">
                 </div>
                 <div>
                     <label>What do you have in mind?</label>
                     <textarea id="inputConcern" rows="4" cols="50" placeholder="Please enter query"></textarea>
                 </div>
                 <div></div>
-                <a href="../index.php"><button type="button" class="loginBtn submit">Submit</button></a>
+                <a><button type="button" class="loginBtn submit" onclick="checkInquiry(event)">Submit</button></a>
                 <label class="warning" id="warningTextLogIn"></label>
 
 

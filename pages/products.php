@@ -76,8 +76,14 @@ $products = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
             <?php
 
-            foreach ($products as $product) { ?>
-
+            foreach ($products as $product) { 
+                
+                if ($product['stock'] == 0) {
+                    continue;
+                }
+                
+                ?>
+                
                 <div id="cardHolder" class="cardHolder col-xs-12 col-sm-6 col-md-3">
                     <div class="card">
                         <img src="<?php echo htmlspecialchars($product['imagePath']) ?>"

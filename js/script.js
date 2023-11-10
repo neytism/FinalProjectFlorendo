@@ -68,7 +68,7 @@ function checkSignUp(event) {
     event.preventDefault();
     
     let warningText = document.getElementById("warningTextLogIn");
-
+    
     let username = document.getElementById("inputUserName").value;
     let firstName = document.getElementById("inputFirstName").value;
     let lastName = document.getElementById("inputLastName").value;
@@ -77,7 +77,7 @@ function checkSignUp(event) {
     let address = document.getElementById("inputAddress").value;
     let password = document.getElementById("inputPassword").value;
     let repeatPassword = document.getElementById("inputRepeatPassword").value;
-
+    
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'signupAction.php', true);
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
@@ -88,19 +88,50 @@ function checkSignUp(event) {
             setTimeout(function(){
                 document.location.href = 'login.php';
            },2000); 
-
+        
         } else{
             ChangeText(warningText, this.responseText, "rgba(255, 37, 37, 0.13)");
         }
     };
-
+    
     xhr.send('uname=' + username + '&fname=' + firstName + '&lname=' + lastName + '&email=' + email + '&phone=' + phone + '&address=' + address + '&pword=' + password + '&rpword=' + repeatPassword);
 
 }
 
+  //for inquiry
+  function checkInquiry(event) {
+    event.preventDefault();
+    
+    let warningText = document.getElementById("warningTextLogIn");
+    
+    let firstName = document.getElementById("inputFirstName").value;
+    let lastName = document.getElementById("inputLastName").value;
+    let email = document.getElementById("inputEmail").value;
+    let phone = document.getElementById("inputPhone").value;
+    let concern = document.getElementById("inputConcern").value;
+    
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'customerCareAction.php', true);
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    xhr.onload = function() {
+        
+        if(this.responseText == "success"){
+            ChangeText(warningText, "inquiry sent, redirecting to home...", "rgba(37, 255, 37, 0.13)");
+            setTimeout(function(){
+                document.location.href = '../index.php';
+           },2000); 
+        
+        } else{
+            ChangeText(warningText, this.responseText, "rgba(255, 37, 37, 0.13)");
+        }
+    };
+    
+    xhr.send('fname=' + firstName + '&lname=' + lastName + '&email=' + email + '&phone=' + phone + '&concern=' + concern);
+
+}
 
 //add product
-function checkAddProd(event) {
+function checkAddProd(event, phpFile, itemID) {
     event.preventDefault();
 
     let warningText = document.getElementById("warningText");
@@ -117,11 +148,17 @@ function checkAddProd(event) {
     formData.append('itemImage', itemImage);
     formData.append('itemPrice', itemPrice);
     formData.append('itemStock', itemStock);
+    if (itemID) {
+        formData.append('itemID', itemID)
+    }
+    
 
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'productAdd.php', true);
+    xhr.open('POST', phpFile, true);
     xhr.onload = function() {
+        console.log(this.responseText);
         if(this.responseText.trim() == "success"){
+            
             ChangeText(warningText, this.responseText, "rgba(37, 255, 37, 0.13)");
             setTimeout(function(){
                 document.location.href = 'productList.php';
@@ -166,13 +203,14 @@ function removeItemFromCart(event, orderID) {
         
         }
     };
-
+    
     xhr.send('orderID=' + orderID);
 
 }
 
 
 var checkboxes = document.querySelectorAll('input.cart-checkbox[type="checkbox"]');
+
 
 
 checkboxes.forEach(function (checkbox) {
@@ -184,7 +222,7 @@ checkboxes.forEach(function (checkbox) {
 function updateTotalAmount() {
     var totalAmount = 0;
     var totalQuantity = 0;
-
+    
     
     checkboxes.forEach(function (checkbox) {
         
@@ -192,7 +230,7 @@ function updateTotalAmount() {
             var row = checkbox.closest('tr');
             var quantity = parseInt(row.querySelector('.quantity').textContent);
             var price = parseFloat(row.querySelector('.price').textContent.replace('₱', ''));
-
+            
             // Check if valid numbers
             if (!isNaN(quantity) && !isNaN(price)) {
                 totalAmount += quantity * price;
@@ -210,6 +248,116 @@ function updateTotalAmount() {
     }
 }
 
+var plusButtons = document.querySelectorAll('plus-btn');
+
+function increaseQuantity(event, orderID){
+    var plusButton = event.target;
+    var row = plusButton.closest('tr');
+    var quantityElement = row.querySelector('.quantity');
+    var quantity = parseInt(quantityElement.textContent);
+    var newQuantity = 0;
+    
+    // Check if valid number
+    if (!isNaN(quantity)) {
+        newQuantity = quantity + 1;
+        quantityElement.textContent = newQuantity;
+    }
+    
+    updateTotalAmount();
+    updateQuantity(orderID, newQuantity);
+}
+
+var minusButtons = document.querySelectorAll('minus-btn');
+
+function decreaseQuantity(event, orderID){
+    var minusButtons = event.target;
+    var row = minusButtons.closest('tr');
+    var quantityElement = row.querySelector('.quantity');
+    var quantity = parseInt(quantityElement.textContent);
+    var newQuantity = 0;
+    
+    // Check if valid number
+    if (!isNaN(quantity)) {
+        newQuantity = quantity - 1;
+        if(newQuantity < 0){
+            newQuantity = 0;
+        }
+        quantityElement.textContent = newQuantity;
+    }
+    
+    updateTotalAmount();
+    updateQuantity(orderID, newQuantity);
+}
+
+function updateQuantity(orderID, value) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'update_quantity.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+    xhr.onload = function() {
+        console.log(this.responseText);
+    };
+
+    xhr.send('order_id=' + orderID + '&value=' + value);
+    
+}
+
+function deleteItem(event, productID) {
+    event.preventDefault();
+    
+    
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'productDelete.php', true);
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    
+    xhr.onload = function() {
+        if (this.status == 200) {
+            document.location.href = 'productList.php';
+        
+        }
+    };
+    
+    xhr.send('productID=' + productID);
+
+}
+
+function deleteInquiry(event, inquiryID) {
+    event.preventDefault();
+    
+    
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'concernDelete.php', true);
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    
+    xhr.onload = function() {
+        if (this.status == 200) {
+            document.location.href = 'concernList.php';
+        
+        }
+    };
+    
+    xhr.send('inquiryID=' + inquiryID);
+
+}
+
+function deleteUser(event, userID) {
+    event.preventDefault();
+
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'userDelete.php', true);
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+    xhr.onload = function() {
+        if (this.status == 200) {
+            document.location.href = 'userList.php';
+        
+        }
+    };
+    
+    xhr.send('userID=' + userID);
+
+}
 
 
 

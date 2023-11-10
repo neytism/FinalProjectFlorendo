@@ -103,8 +103,8 @@ $profiles = mysqli_fetch_all($result, MYSQLI_ASSOC);
                             <td class="description"><?php echo htmlspecialchars($profile['email']) ?></td>
                             <td ><?php echo htmlspecialchars($profile['mobile']) ?></td>
                             <td ><?php echo htmlspecialchars($profile['address']) ?></td>
-                            <td ><a href="#" class="btn cart"
-                                    style="color: white; background-color: gray;" role="button">edit</a></td>
+                            <td ><a class="btn cart"
+                                    style="color: white; background-color: gray;" role="button" onclick="deleteUser(event,<?php echo $profile['user_id'] ?>)">delete</a></td>
                         </tr>
                     <?php }
 

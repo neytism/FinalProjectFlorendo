@@ -60,7 +60,7 @@ if (isset($_SESSION["user_id"])) {
       <div class="menu">
 
         <li><a href="#">Home</a></li>
-        <li><a href="#">About Us</a></li>
+        <li><a href="#about">About Us</a></li>
 
         <li>
           <a href="pages/products.php">Shop</a>
@@ -136,6 +136,34 @@ if (isset($_SESSION["user_id"])) {
     </div>
 
     <div class="spotlight-holder section">
+      
+      <div class="spotlight-dark" style="background-image: url('assets/Images/7-dark.png');">
+        <div class="overlaytextcontainer">
+          <div class="overlaytext centerTitle" style=" width:100%; display: flex; justify-content: center; align-items: center; height: 100vh;">
+            
+            <p style="width:70%; letter-spacing: 5px; line-height: 40px;" >Gizmoverse is rooted in a deep passion for technology, gaming, and artistic expression. As an artist and a game development student, the founder ignited an idea combining a love for gadgets with artistic creativity. The founder recognized the incredible potential of merging these two worlds. Gizmoverse is made as a platform not only to cater to tech enthusiasts but also to serve the vibrant gaming community.</p>
+          
+          </div>
+        
+  
+        </div>
+      </div>
+
+      <div class="spotlight-light" style="background-image: url('assets/Images/7-light.png');">
+        <div class="overlaytextcontainer">
+          
+          <div class="overlaytext invert centerTitle" style="width:100%; display: flex; justify-content: center; align-items: center; height: 100vh;">
+            
+            <p style="width:70%; letter-spacing: 5px; line-height: 40px;">Gizmoverse is rooted in a deep passion for technology, gaming, and artistic expression. As an artist and a game development student, the founder ignited an idea combining a love for gadgets with artistic creativity. The founder recognized the incredible potential of merging these two worlds. Gizmoverse is made as a platform not only to cater to tech enthusiasts but also to serve the vibrant gaming community.</p>
+          
+          </div>
+        
+        </div>
+      </div>
+    
+    </div>
+
+    <div class="spotlight-holder section" id="about">
 
       <div class="spotlight-dark" style="background-image: url('assets/Images/5.png');">
         <div class="overlaytextcontainer">

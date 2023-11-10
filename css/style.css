@@ -600,6 +600,11 @@ th:last-child {
         font-size: 3rem;
     }
 
+    .overlaytext p {
+        letter-spacing: 0px !important; 
+        line-height: 25px !important;
+    }
+
     .overlaytext h4 {
         letter-spacing: 10px;
         font-size: 1.3rem;
@@ -620,6 +625,8 @@ th:last-child {
     .products {
         margin: 10px; 
     }
+
+
    
 }
 

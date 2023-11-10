@@ -57,7 +57,7 @@ if (isset($_GET['logout'])) {
                 <div id="productListEdit" class="col-md-3"> 
                     <a href="productList.php" style="text-decoration: none;">
                         <div class="adminCard" style="height: 240px;">
-                        <span class="glyphicon glyphicon-shopping-cart" style="font-size: 130px; text-align: center;"></span>
+                        <span class="glyphicon glyphicon-tags" style="font-size: 130px; text-align: center;"></span>
                             <div >
                                 <h3>PRODUCT LIST</h3>
                                 <p>Edit product list</p>
@@ -73,6 +73,18 @@ if (isset($_GET['logout'])) {
                             <div >
                                 <h3>USER LIST</h3>
                                 <p>Edit user list</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div id="productListEdit" class="col-md-3"> 
+                    <a href="concernList.php" style="text-decoration: none;">
+                        <div class="adminCard" style="height: 240px;">
+                        <span class="glyphicon glyphicon-comment" style="font-size: 130px; text-align: center;"></span>
+                            <div >
+                                <h3>CONCERNS LIST</h3>
+                                <p>see concerns list</p>
                             </div>
                         </div>
                     </a>

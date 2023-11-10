@@ -16,20 +16,26 @@ if ($_SESSION['role'] != "admin") {
     header('location: login.php');
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "onlinestore";
 
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "onlinestore";
-    
-    // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
-    
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$temp_id = isset($_GET['productID']) ? $_GET['productID'] : null;
+
+$sql = "SELECT itemName, description, imagePath, price, stock FROM products WHERE product_id='$temp_id'";
+$result = mysqli_query($conn, $sql);
+$tempProduct = mysqli_fetch_assoc($result);
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     
     $errors = array(
@@ -39,17 +45,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         'itemPrice' => '',
         'itemStock' => ''
     );
-
+    
+    $itemID = $_POST['itemID'];
     $itemName = $_POST['itemName'];
     $itemDesc = $_POST['itemDesc'];
     $itemPrice = $_POST['itemPrice'];
     $itemStock = $_POST['itemStock'];
+    $itemImage = '';
+
+    $sql = "SELECT itemName, description, imagePath, price, stock FROM products WHERE product_id='$itemID'";
+$result = mysqli_query($conn, $sql);
+$tempProduct = mysqli_fetch_assoc($result);
+    
     if(isset($_FILES['itemImage'])) {
         $itemImage = $_FILES['itemImage'];
+    } else{
+        $itemImage = $tempProduct['imagePath'];
     }
     
     if (empty($itemName)) {
-        $errors['itemName'] = '-Item Name is required';
+        $itemName = $tempProduct['itemName'];
     } else {
         if (strlen($itemName) > 200) {
             $errors['itemName'] = '-Invalid, too long.';
@@ -57,21 +72,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if (empty($itemDesc)) {
-        $errors['itemDesc'] = '-Description is required';
+        $itemDesc = $tempProduct['description'];
     } 
 
     if (empty($itemPrice)) {
-        $errors['itemPrice'] = '-Price is required';
+        $itemPrice = $tempProduct['price'];
     } 
 
     if (empty($itemStock)) {
-        $errors['itemStock'] = '-Stock is required';
+        $itemStock = $tempProduct['stock'];
     } 
 
     
 
     if (empty($itemImage['name'])) {
-        $errors['itemImage'] = '-Image is required';
+        $itemImage = $tempProduct['imagePath'];
     } else {
         $base_dir = "../assets/Images/";
         $target_dir = "../".$base_dir;
@@ -81,10 +96,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $newFilePath = $target_dir . $newFileName;
         $relativeFilePath = $base_dir . $newFileName;
     
-        // Check if file already exists
-        if (file_exists($newFilePath)) {
-            $errors['itemImage'] = '-File already exists';
-        }
     
         if ($itemImage["size"] > 500000) {
             $errors['itemImage'] = '-File is too large';
@@ -103,7 +114,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
     
-
+    
 
     if (array_filter($errors)) {
         echo implode("\n", array_filter($errors));
@@ -113,7 +124,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $itemPrice = mysqli_real_escape_string($conn, $itemPrice);
         $itemStock = mysqli_real_escape_string($conn, $itemStock);
         
-        $sql = "INSERT INTO products(itemName,imagePath,description,price,stock) VALUES('$itemName','$itemImage','$itemDesc','$itemPrice','$itemStock')";
+        $sql = "UPDATE products SET itemName='$itemName', imagePath='$itemImage', description='$itemDesc', price='$itemPrice', stock='$itemStock' WHERE product_id='$itemID'";
+        
         
         mysqli_query($conn, $sql);
         echo "success";
@@ -138,7 +150,7 @@ return;
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <title>Add Product</title>
+    <title>Edit Product</title>
 </head>
 
 <body style="background-color: rgb(10, 10, 10);">
@@ -149,27 +161,29 @@ return;
 
         <div class="formHolder" style="width: 60%;">
 
-            <div class="logo center"><a href="productList.php">ADD PRODUCT</a></div>
+            <div class="logo center"><a href="productList.php">EDIT PRODUCT</a></div>
 
             <form id="addProductForm">
 
                 <div style="padding-bottom: 0px; padding-left: 25px;">
 
                     <h3 style="display: inline-block; width: 30%;">ITEM NAME: </h3>
-                    <input style="display: inline-block !important; padding: 25px 25px; width:69%;" 69%type="text" id="inputItemName" placeholder="Item Name" required>
+                    <input style="display: inline-block !important; padding: 25px 25px; width:69%;" 69%type="text" id="inputItemName" placeholder="Item Name" value="<?php echo htmlspecialchars($tempProduct['itemName']) ?>" required>
 
                 </div>
 
                 <div style="padding-bottom: 0px; padding-left: 25px;">
-
+                    
                     <h3 style="display: inline-block; width: 30%;">DESCRIPTION: </h3>
-                    <input style="display: inline-block !important; padding: 25px 25px; width:69%;" type="text" id="inputItemDescription" placeholder="Description" required>
+                    <input style="display: inline-block !important; padding: 25px 25px; width:69%;" type="text" id="inputItemDescription" placeholder="Description" value="<?php echo htmlspecialchars($tempProduct['description']) ?>" required>
 
                 </div>
 
                 <div style="padding-bottom: 0px; padding-left: 25px;">
 
-                    <h3 style="display: inline-block; width: 30%;">Image: </h3>
+                    <h3 style="display: inline-block; width: 22%;">Image: </h3>
+                    <img src="../<?php echo htmlspecialchars($tempProduct['imagePath']) ?>"
+                                style=" display: inline-block !important; height: 80px; width: 80px; object-fit: contain;" alt="<?php echo htmlspecialchars($product['description']) ?>">
                     <input style="display: inline-block !important; padding: 25px 25px; width:69%;" type="file" accept="image/*" id="inputItemImage" required>
 
                 </div>
@@ -177,26 +191,27 @@ return;
                 <div style="padding-bottom: 0px; padding-left: 25px;">
 
                     <h3 style="display: inline-block; width: 30%;">PRICE: </h3>
-                    <input style="display: inline-block !important; padding: 25px 25px; width:69%;" type="number" id="inputItemPrice" placeholder="Price" required>
+                    <input style="display: inline-block !important; padding: 25px 25px; width:69%;" type="number" id="inputItemPrice" placeholder="Price" value="<?php echo htmlspecialchars($tempProduct['price']) ?>" required>
 
                 </div>
 
                 <div style="padding-bottom: 0px; padding-left: 25px;">
 
                     <h3 style="display: inline-block; width: 30%;">STOCK: </h3>
-                    <input style="display: inline-block !important; padding: 25px 25px; width:69%;" type="number" id="inputItemStock" placeholder="Stock" required>
-                
+                    <input style="display: inline-block !important; padding: 25px 25px; width:69%;" type="number" id="inputItemStock" placeholder="Stock" value="<?php echo htmlspecialchars($tempProduct['stock']) ?>" required>
+
                 </div>
 
                  <div style="text-align:center; padding: 30px 0px 0px 0px; padding-left: 25px; width:100%;">
-
-                    <button type="submit" class="loginBtn submit" style="display: inline-block !important; padding: 20px 20px; width: 200px; margin-right: 20px;" onclick="checkAddProd(event, 'productAdd.php','')">SUBMIT</button>
+                    
+                    <button type="submit" class="btn btn-success" style="display: inline-block !important; padding: 20px 20px; width: 200px; margin-right: 20px;" onclick="checkAddProd(event, 'productEdit.php', <?php echo htmlspecialchars($temp_id) ?>)">SUBMIT</button>
+                    <button class="btn btn-danger" style="display: inline-block !important; padding: 20px 20px; width: 200px;" onclick="deleteItem(event,<?php echo $temp_id ?>)" formnovalidate>DELETE</button>
                     <a  class="loginBtn cancel" style="display: inline-block !important; padding: 20px 20px; width: 200px; margin-left: 20px;" href="productList.php">CANCEL</a>
                 </div>
 
                 <label class="warning" id="warningText">wrong password</label>
 
-
+            
             </form>
 
 
