@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 11, 2023 at 03:03 PM
+-- Generation Time: Nov 12, 2023 at 12:57 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -39,11 +39,19 @@ CREATE TABLE `cart` (
 --
 
 INSERT INTO `cart` (`order_id`, `product_id`, `quantity`, `user_id`) VALUES
-(34, 1, 7, 1),
-(35, 3, 6, 1),
+(34, 1, 2, 1),
+(35, 3, 7, 1),
 (36, 2, 6, 1),
-(37, 5, 6, 1),
-(38, 4, 6, 1);
+(37, 5, 7, 1),
+(38, 4, 7, 1),
+(39, 5, 2, 2),
+(40, 26, 1, 2),
+(41, 2, 1, 2),
+(42, 3, 1, 2),
+(43, 4, 1, 2),
+(44, 6, 1, 2),
+(45, 1, 1, 2),
+(46, 27, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -96,7 +104,9 @@ INSERT INTO `inquiries` (`inquiry_id`, `firstName`, `lastName`, `email`, `contac
 CREATE TABLE `products` (
   `product_id` int(11) NOT NULL,
   `itemName` varchar(255) NOT NULL,
+  `brand_model` varchar(255) DEFAULT NULL,
   `imagePath` varchar(255) NOT NULL,
+  `product_type` enum('Set Product Type','Phone','Case','Peripheral','Console','Mousepad','Tablet','Laptop','Personal Computer') DEFAULT NULL,
   `description` text NOT NULL,
   `price` decimal(10,2) NOT NULL,
   `stock` int(11) NOT NULL
@@ -106,13 +116,15 @@ CREATE TABLE `products` (
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`product_id`, `itemName`, `imagePath`, `description`, `price`, `stock`) VALUES
-(1, 'iPad Titanium', '../assets/Images/iPad Titanium.png', 'Custom Titanium Gray back skin for iPad current Gen.', 99.99, 12),
-(2, 'iPhone', '../assets/Images/iphone.png', 'custom iPhone skin.', 99.99, 21),
-(3, 'Nintendo Switch', '../assets/Images/switch.png', 'custom Switch skins.', 69.99, 12),
-(4, 'PS5 Skin', '../assets/Images/ps5.png', 'PS5 custom skin', 69.99, 3),
-(5, 'Xbox Cool Metal', '../assets/Images/xbox.png', 'Xbox Series X Cool Metal that looks cool and will keep you console cool.', 99.99, 18),
-(6, 'MacBook Brushed Aluminum', '../assets/Images/macbook.png', 'Custom MacBook Skin that is lighter and cooler.', 99.99, 3);
+INSERT INTO `products` (`product_id`, `itemName`, `brand_model`, `imagePath`, `product_type`, `description`, `price`, `stock`) VALUES
+(1, 'iPad Titanium', 'Apple iPad 10th generation', '../assets/Images/iPad Titanium.png', 'Tablet', 'Custom Titanium Gray back skin for iPad current Gen.', 99.99, 12),
+(2, 'iPhone', 'Apple iPhone 15', '../assets/Images/iphone.png', 'Phone', 'custom iPhone skin.', 99.99, 21),
+(3, 'Nintendo Switch', 'Nintendo Switch V1', '../assets/Images/switch.png', 'Console', 'custom Switch skins.', 69.99, 12),
+(4, 'PS5 Skin', 'Sony PlayStation PS5 Standard', '../assets/Images/ps5.png', 'Console', 'PS5 custom skin', 69.99, 3),
+(5, 'Xbox Cool Metal', 'Microsoft Xbox Series X', '../assets/Images/xbox.png', 'Console', 'Xbox Series X Cool Metal that looks cool and will keep you console cool.', 99.99, 18),
+(6, 'MacBook Brushed Aluminum', 'Apple', '../assets/Images/macbook.png', 'Laptop', 'Custom MacBook Skin that is lighter and cooler.', 99.99, 3),
+(26, 'Camouflage iPhone', 'Apple iPhone 15', '../assets/Images/Apple iPhone 15-Camouflage iPhone.png', 'Phone', 'Durable camouflage skin for your iPhone.', 16.99, 1),
+(27, 'Carbon Fiber Black Skin for iPhone', 'Apple iPhone 15', '../assets/Images/Apple iPhone 15-Carbon Fiber Black Skin for iPhone.png', 'Phone', 'Clean Design ,easy to put on and remove without any sticky residue. We use 3m, Carlas, Techwrap, Avery Dennison and other Premium materials.', 15.99, 5);
 
 -- --------------------------------------------------------
 
@@ -196,25 +208,25 @@ ALTER TABLE `profile`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT for table `inquiries`
 --
 ALTER TABLE `inquiries`
-  MODIFY `inquiry_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `inquiry_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `profile`
 --
 ALTER TABLE `profile`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- Constraints for dumped tables
