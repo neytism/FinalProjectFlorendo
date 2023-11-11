@@ -44,7 +44,10 @@ if (isset($_SESSION["user_id"])) {
   <title>Home</title>
 </head>
 
-<body>
+<body class="fadeInPage">
+
+<a id="goToTop" style="background-color: white; height: 70px; width: 70px; display: none; justify-content: center; align-items: center; border-radius: 50%; position: fixed; bottom: 15px; right: 15px; z-index: 100; border: 1px solid gray; text-decoration: none;" href="#">TOP</a>
+  
 
   <nav class="navigationbar">
     <!-- LOGO -->
@@ -93,7 +96,7 @@ if (isset($_SESSION["user_id"])) {
 
     <div class="spotlight-holder">
 
-      <div class="spotlight-dark" style="background-image: url('assets/Images/1.png');">
+      <div class="spotlight-dark" style="background-image: url('assets/Images/1-dark.png');">
         <div class="overlaytextcontainer">
           <div class="overlaytext bottomTitle">
             <h4><?php if(!isset($_SESSION["user_id"])){echo htmlspecialchars("GIZMOVERSE");}else{echo htmlspecialchars("Welcome ".$name);} ?></h4>
@@ -102,7 +105,7 @@ if (isset($_SESSION["user_id"])) {
         </div>
       </div>
 
-      <div class="spotlight-light" style="background-image: url('assets/Images/2.png');">
+      <div class="spotlight-light" style="background-image: url('assets/Images/1-light.png');">
         <div class="overlaytextcontainer">
           <div class="overlaytext bottomTitle">
           <h4><?php if(!isset($_SESSION["user_id"])){echo htmlspecialchars("GIZMOVERSE");}else{echo htmlspecialchars("Welcome ".$name);} ?></h4>
@@ -114,8 +117,8 @@ if (isset($_SESSION["user_id"])) {
     </div>
 
     <div class="spotlight-holder section">
-
-      <div class="spotlight-dark" style="background-image: url('assets/Images/3.png');">
+      
+      <div class="spotlight-dark" style="background-image: url('assets/Images/2-dark.png');">
         <div class="overlaytextcontainer">
           <div class="overlaytext rightTitle">
             <h4>GIZMOVERSE</h4>
@@ -123,8 +126,8 @@ if (isset($_SESSION["user_id"])) {
           </div>
         </div>
       </div>
-
-      <div class="spotlight-light" style="background-image: url('assets/Images/4.png');">
+      
+      <div class="spotlight-light" style="background-image: url('assets/Images/2-light.png');">
         <div class="overlaytextcontainer ">
           <div class="overlaytext invert rightTitle">
             <h4>GIZMOVERSE</h4>
@@ -132,12 +135,56 @@ if (isset($_SESSION["user_id"])) {
           </div>
         </div>
       </div>
-
+    
     </div>
 
     <div class="spotlight-holder section">
       
-      <div class="spotlight-dark" style="background-image: url('assets/Images/7-dark.png');">
+      <div class="spotlight-dark" style="background-image: url('assets/Images/6-dark.png');">
+        <div class="overlaytextcontainer">
+          <div class="overlaytext leftTitle">
+            <h4>GIZMOVERSE</h4>
+            <h1>Amplify your dreams<br>with the cosmos</h1>
+          </div>
+        </div>
+      </div>
+      
+      <div class="spotlight-light" style="background-image: url('assets/Images/6-light.png');">
+        <div class="overlaytextcontainer ">
+          <div class="overlaytext invert leftTitle">
+            <h4>GIZMOVERSE</h4>
+            <h1>Amplify your dreams<br>with gizmoverse</h1>
+          </div>
+        </div>
+      </div>
+    
+    </div>
+
+    <div class="spotlight-holder section">
+      
+      <div class="spotlight-dark" style="background-image: url('assets/Images/3-dark.png');">
+        <div class="overlaytextcontainer">
+          <div class="overlaytext rightTitle">
+            <h4>GIZMOVERSE</h4>
+            <h1>WE MAKE THINGS<br>BETTER</h1>
+          </div>
+        </div>
+      </div>
+      
+      <div class="spotlight-light" style="background-image: url('assets/Images/3-light.png');">
+        <div class="overlaytextcontainer ">
+          <div class="overlaytext rightTitle">
+            <h4>GIZMOVERSE</h4>
+            <h1>WE MAKE THINGS<br>PERFECT</h1>
+          </div>
+        </div>
+      </div>
+    
+    </div>
+
+    <div class="spotlight-holder section">
+      
+      <div class="spotlight-dark" style="background-image: url('assets/Images/4-dark.png');">
         <div class="overlaytextcontainer">
           <div class="overlaytext centerTitle" style=" width:100%; display: flex; justify-content: center; align-items: center; height: 100vh;">
             
@@ -149,7 +196,7 @@ if (isset($_SESSION["user_id"])) {
         </div>
       </div>
 
-      <div class="spotlight-light" style="background-image: url('assets/Images/7-light.png');">
+      <div class="spotlight-light" style="background-image: url('assets/Images/4-light.png');">
         <div class="overlaytextcontainer">
           
           <div class="overlaytext invert centerTitle" style="width:100%; display: flex; justify-content: center; align-items: center; height: 100vh;">
@@ -165,7 +212,7 @@ if (isset($_SESSION["user_id"])) {
 
     <div class="spotlight-holder section" id="about">
 
-      <div class="spotlight-dark" style="background-image: url('assets/Images/5.png');">
+      <div class="spotlight-dark" style="background-image: url('assets/Images/5-dark.png');">
         <div class="overlaytextcontainer">
           <div class="overlaytext centerTitle" style="padding-top: 30vh;">
             <h4>WORK WITH US</h4>
@@ -176,7 +223,7 @@ if (isset($_SESSION["user_id"])) {
         </div>
       </div>
 
-      <div class="spotlight-light" style="background-image: url('assets/Images/6.png');">
+      <div class="spotlight-light" style="background-image: url('assets/Images/5-light.png');">
         <div class="overlaytextcontainer">
           <div class="overlaytext invert centerTitle" style="padding-top: 30vh;">
             <h4>TO FIND OUT</h4>
@@ -190,8 +237,8 @@ if (isset($_SESSION["user_id"])) {
     </div>
 
     <div class="footer">
-      <p>THIS IS A REQUIREMENT FOR EMC002 WEB PROGRAMMING</p>
-      <p>3D BY NATE FLORENDO</p>
+      <p>- - - - - THIS IS A REQUIREMENT FOR EMC002 WEB PROGRAMMING</p>
+      <p>THANK YOU - - - - -</p>
     </div>
 
   </div>

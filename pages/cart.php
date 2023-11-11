@@ -54,7 +54,7 @@ $cartItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
             <h3 style="margin-right: 20px;">SUBTOTAL: </h3>
             <h3 class="total-amount" style="margin-right: 50px;">₱ 0.00</h3>
             <a href="#" class="total-quantity btn cart"
-                style="color: white; background-color: gray; margin-right: 30px; align-self: center;"
+                style="color: white; background-color: green; margin-right: 30px; align-self: center;"
                 role="button">CHECKOUT(0)</a>
             <h3 style="margin-right: 20px;"></h3>
         </div>
@@ -77,7 +77,13 @@ $cartItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
             <div class="menu">
                 <li><a href="../index.php">Home</a></li>
                 <li><a href="products.php">Shop</a></li>
-                <li><a href="profile.php">Profile</a></li>
+                <li><a href="customercare.php">Contact</a></li>
+                <li><a href="<?php if ($_SESSION['role'] == "admin" ) {
+                echo htmlspecialchars("admin/admin.php");
+              } else {
+                echo htmlspecialchars("profile.php");
+              } ?>">Profile</a></li>
+                <li><a href="profile.php?logout='1'" style="color: red;">Log out</a></li>
             </div>
         </ul>
     </nav>
@@ -111,16 +117,16 @@ $cartItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
                                     <?php echo htmlspecialchars($cartItem['itemName']) ?>
                                 </td>
                                 <td >
-                                    <button class="minus-btn" style="margin-right: 10px; width: 25px;" type="button" name="button" onclick="decreaseQuantity(event,<?php echo $cartItem['order_id'] ?>)">-</button>
+                                    <button class="minus-btn" style="margin-right: 20px; width: 25px;" type="button" name="button" onclick="decreaseQuantity(event,<?php echo $cartItem['order_id'] ?>)">-</button>
                                     <span class="quantity"><?php echo htmlspecialchars($cartItem['quantity']) ?></span>
-                                    <button class="plus-btn" style="margin-left: 10px; width: 25px;" type="button" name="button" onclick="increaseQuantity(event,<?php echo $cartItem['order_id'] ?>)">+</button>
+                                    <button class="plus-btn" style="margin-left: 20px; width: 25px;" type="button" name="button" onclick="increaseQuantity(event,<?php echo $cartItem['order_id'] ?>)">+</button>
                                 </td>
                                 
                                 <td class="price">₱
                                     <?php echo htmlspecialchars($cartItem['price']) ?>
                                 </td>
                                 <td><a onclick="removeItemFromCart(event,<?php echo $cartItem['order_id'] ?>)" class="btn cart"
-                                        style="color: white; background-color: gray;" role="button">REMOVE</a></td>
+                                        style="color: white; background-color: rgb(255, 100, 100);" role="button">REMOVE</a></td>
                             </tr>
                         <?php }
                     } else { ?>

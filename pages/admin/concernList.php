@@ -29,7 +29,7 @@ if (!$conn) {
     echo 'Connection error: ' . mysqli_connect_error();
 }
 
-$sql = 'SELECT inquiry_id, firstName, lastName, email, contact, inquiry, timeDate FROM inquiries';
+$sql = 'SELECT inquiry_id, firstName, lastName, email, contact, inquiry, timeDate FROM inquiries ORDER BY timeDate DESC;';
 
 $result = mysqli_query($conn, $sql);
 
@@ -104,7 +104,7 @@ $inquiries = mysqli_fetch_all($result, MYSQLI_ASSOC);
                             <td class="description" style="max-width: 750px; padding: 25px 0px;"><?php echo htmlspecialchars($inquiry['inquiry']) ?></td>
                             <td ><?php echo htmlspecialchars($inquiry['timeDate']) ?></td>
                             <td ><a class="btn cart"
-                                    style="color: white; background-color: gray;" role="button" onclick="deleteInquiry(event,<?php echo $inquiry['inquiry_id'] ?>)">delete</a></td>
+                                    style="color: white; background-color: red;" role="button" onclick="deleteInquiry(event,<?php echo $inquiry['inquiry_id'] ?>)">delete</a></td>
                         </tr>
                     <?php }
 

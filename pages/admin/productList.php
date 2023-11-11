@@ -29,7 +29,7 @@ if (!$conn) {
     echo 'Connection error: ' . mysqli_connect_error();
 }
 
-$sql = 'SELECT product_id, itemName, description, imagePath, price, stock FROM products';
+$sql = 'SELECT product_id, product_type, brand_model, itemName, description, imagePath, price, stock FROM products';
 
 $result = mysqli_query($conn, $sql);
 
@@ -86,7 +86,7 @@ $products = mysqli_fetch_all($result, MYSQLI_ASSOC);
                     <tr style="letter-spacing: 1px;">
                         <th scope="col">ID</th>
                         <th scope="col">IMAGE</th>
-                        <th scope="col">ITEM NAME</th>
+                        <th scope="col">NAME</th>
                         <th scope="col">DESCRIPTION</th>
                         <th scope="col">IMAGE PATH</th>
                         <th scope="col">STOCK</th>
@@ -107,10 +107,11 @@ $products = mysqli_fetch_all($result, MYSQLI_ASSOC);
                                 style="height: 80px; width: 80px; object-fit: contain;" alt="<?php echo htmlspecialchars($product['description']) ?>"></td>
 
                             <td class="name" ><?php echo htmlspecialchars($product['itemName']) ?></td>
-                            <td class="description alt"><?php echo htmlspecialchars($product['description']) ?></td>
+                            <td class="alt" style="display:none;"><?php echo htmlspecialchars($product['product_type']) ?></td>
+                            <td class="description"><?php echo htmlspecialchars($product['brand_model'].": ".$product['description']) ?></td>
                             <td ><?php echo htmlspecialchars($product['imagePath']) ?></td>
                             <td ><?php echo htmlspecialchars($product['stock']) ?></td>
-                            <td >₱ <?php echo htmlspecialchars($product['price']) ?></td>
+                            <td >₱<?php echo htmlspecialchars($product['price']) ?></td>
                             <td ><a href="productEdit.php?productID=<?php echo $product['product_id'] ?>" class="btn cart"
                                     style="color: white; background-color: gray;" role="button">edit</a></td>
                         </tr>

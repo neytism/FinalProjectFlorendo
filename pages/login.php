@@ -28,16 +28,18 @@
         <div class="formHolder">
 
             <div class="logo center"><a href="../index.php">GIZMOVERSE</a></div>
-
+            
             <h3 style="padding-bottom: 25px; text-align: center;">Login</h3>
 
             <form id="loginForm">
                 <div>
                     <input type="text" id="inputUserName" placeholder="Username" required>
                 </div>
-                <div>
+                <div style="position:relative;">
                     <input type="password" id="inputPassword" placeholder="Password" required>
+                    <button class="glyphicon glyphicon-eye-open" style="position:absolute; right: 11px; top: 25px; background-color:rgba(0,0,0,0); border:none; color: gray;" onclick="showPassword(event)" title="See Password" formnovalidate></button>
                 </div>
+                
                 <div></div>
                 <button type="submit" class="loginBtn submit" onclick="checkLogin(event)">Login</button>
                 <label class="warning" id="warningTextLogIn"></label>

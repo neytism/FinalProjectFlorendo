@@ -17,7 +17,7 @@ if ($conn->connect_error) {
 
 $temp_id = $_GET['productID'];
 
-$sql = "SELECT itemName, description, imagePath, price, stock FROM products WHERE product_id='$temp_id'";
+$sql = "SELECT itemName, description, imagePath, price, stock, brand_model FROM products WHERE product_id='$temp_id'";
 
 $result = mysqli_query($conn, $sql);
 
@@ -49,7 +49,7 @@ $tempProduct = mysqli_fetch_assoc($result);
     <div id="overlayWindow" style="position:fixed; height: 100vh; width: 100vw; z-index: 100; display:block;">
         <div style="height: 100%; width: 100%;padding: 8% 15%;">
             <div style="position: relative; height: 100%; width: 100%; background-color: white; border-radius: 30px; box-shadow: 0px 0px 50px rgba(0, 0, 0, 1);">
-                <a href="products.php" type="button" class="close" style="position: absolute; right: 30px; top: 30px;" aria-label="Close">
+                <a href="products.php#<?php echo htmlspecialchars($temp_id) ?>" type="button" class="close" style="position: absolute; right: 30px; top: 30px;" aria-label="Close">
                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                 </a>
                 
@@ -66,15 +66,19 @@ $tempProduct = mysqli_fetch_assoc($result);
                     <div style="width: 45%;">
                         <h2><?php echo htmlspecialchars($tempProduct['itemName']) ?></h2>
                         <p><?php echo htmlspecialchars($tempProduct['description']) ?></p>
+                        <p>Brand/Model: <?php echo htmlspecialchars($tempProduct['brand_model']) ?></p>
                         <p>Price: ₱ <?php echo htmlspecialchars($tempProduct['price']) ?></p>
                         <p>Stock: <?php echo htmlspecialchars($tempProduct['stock']) ?> remaining.</p>
                     </div>
                 </div>
 
-
-                <button type="button" class="btn btn-success" style="position: absolute; right: 30px; bottom: 30px;" aria-label="Save">
-                    BUY NOW
-                </button>
+                
+                <button <?php if (!isset($_SESSION["user_id"])) {
+    echo 'onclick="window.location.href=\'login.php\'"';
+}?> type="button" class="btn btn-success" style="position: absolute; right: 30px; bottom: 30px;" aria-label="Save">
+    BUY NOW
+</button>
+            
             </div>
         </div>
     </div>

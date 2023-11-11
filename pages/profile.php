@@ -73,6 +73,8 @@
             <!-- NAVIGATION MENUS -->
             <div class="menu">
                 <li><a href="../index.php">Home</a></li>
+                <li><a href="products.php">Shop</a></li>
+                <li><a href="customercare.php">Contact</a></li>
                 <li><a href="cart.php">Cart</a></li>
                 <li><a href="profile.php?logout='1'" style="color: red;">Log out</a></li>
             </div>

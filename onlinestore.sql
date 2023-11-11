@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 11, 2023 at 12:24 AM
+-- Generation Time: Nov 11, 2023 at 03:03 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -44,6 +44,48 @@ INSERT INTO `cart` (`order_id`, `product_id`, `quantity`, `user_id`) VALUES
 (36, 2, 6, 1),
 (37, 5, 6, 1),
 (38, 4, 6, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `inquiries`
+--
+
+CREATE TABLE `inquiries` (
+  `inquiry_id` int(11) NOT NULL,
+  `firstName` varchar(255) DEFAULT NULL,
+  `lastName` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `contact` varchar(255) DEFAULT NULL,
+  `inquiry` text DEFAULT NULL,
+  `timeDate` varchar(255) NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `inquiries`
+--
+
+INSERT INTO `inquiries` (`inquiry_id`, `firstName`, `lastName`, `email`, `contact`, `inquiry`, `timeDate`) VALUES
+(1, 'Nate', 'Florendo', 'nate.florendo@ciit.edu.ph', '09121212121', 'Hello Gizmoverse! I think your webpages need improvments, i really could use a buy function where I can but actual products from your website. It would really help me for making my devices good and cool.', '2023-11-11 22:02:37'),
+(2, 'John', 'Doe', 'JohnDoe@gmail.com', '09123456781', 'Hello Gizmoverse! I love your products and I would like to see more variety.', '2023-11-11 22:03:00'),
+(3, 'Jane', 'Smith', 'JaneSmith@gmail.com', '09123456782', 'Hello Gizmoverse! Your website is very user-friendly.', '2023-11-11 22:04:00'),
+(4, 'Robert', 'Johnson', 'RobertJohnson@gmail.com', '09123456783', 'Hello Gizmoverse! I am interested in your upcoming products.', '2023-11-11 22:05:00'),
+(5, 'Michael', 'Brown', 'MichaelBrown@gmail.com', '09123456784', 'Hello Gizmoverse! Can you provide more information about your services?', '2023-11-11 22:06:00'),
+(6, 'Emily', 'Davis', 'EmilyDavis@gmail.com', '09123456785', 'Hello Gizmoverse! I am impressed with the quality of your products.', '2023-11-11 22:07:00'),
+(7, 'Sarah', 'Miller', 'SarahMiller@gmail.com', '09123456786', 'Hello Gizmoverse! I would like to know more about your warranty policy.', '2023-11-11 22:08:00'),
+(8, 'James', 'Wilson', 'JamesWilson@gmail.com', '09123456787', 'Hello Gizmoverse! I am looking forward to your new releases.', '2023-11-11 22:09:00'),
+(9, 'Patricia', 'Moore', 'PatriciaMoore@gmail.com', '09123456788', 'Hello Gizmoverse! I appreciate your prompt customer service.', '2023-11-11 22:10:00'),
+(10, 'Richard', 'Taylor', 'RichardTaylor@gmail.com', '09123456789', 'Hello Gizmoverse! I am happy with my recent purchase.', '2023-11-11 22:11:00'),
+(11, 'Linda', 'Anderson', 'LindaAnderson@gmail.com', '09123456790', 'Hello Gizmoverse! I would like to suggest a few features for your products.', '2023-11-11 22:12:00'),
+(12, 'William', 'Thomas', 'WilliamThomas@gmail.com', '09123456791', 'Hello Gizmoverse! I am interested in collaborating with your team.', '2023-11-11 22:13:00'),
+(13, 'Elizabeth', 'Jackson', 'ElizabethJackson@gmail.com', '09123456792', 'Hello Gizmoverse! I am curious about your product development process.', '2023-11-11 22:14:00'),
+(14, 'David', 'White', 'DavidWhite@gmail.com', '09123456793', 'Hello Gizmoverse! I am excited about your upcoming sale.', '2023-11-11 22:15:00'),
+(15, 'Jennifer', 'Harris', 'JenniferHarris@gmail.com', '09123456794', 'Hello Gizmoverse! I am a big fan of your brand.', '2023-11-11 22:16:00'),
+(16, 'Charles', 'Martin', 'CharlesMartin@gmail.com', '09123456795', 'Hello Gizmoverse! I am interested in your affiliate program.', '2023-11-11 22:17:00'),
+(17, 'Susan', 'Thompson', 'SusanThompson@gmail.com', '09123456796', 'Hello Gizmoverse! I am looking for a product that can meet my specific needs.', '2023-11-11 22:18:00'),
+(18, 'Joseph', 'Garcia', 'JosephGarcia@gmail.com', '09123456797', 'Hello Gizmoverse! I am impressed with your commitment to quality.', '2023-11-11 22:19:00'),
+(19, 'Margaret', 'Martinez', 'MargaretMartinez@gmail.com', '09123456798', 'Hello Gizmoverse! I am interested in learning more about your company.', '2023-11-11 22:20:00'),
+(20, 'Josephine', 'Walker', 'JosephineWalker@gmail.com', '09123456799', 'Hello Gizmoverse! I am looking forward to your next product!', '2023-11-11 22:21:00');
 
 -- --------------------------------------------------------
 
@@ -96,7 +138,25 @@ CREATE TABLE `profile` (
 
 INSERT INTO `profile` (`user_id`, `username`, `password`, `firstName`, `lastName`, `email`, `mobile`, `address`, `role`) VALUES
 (1, 'admin', 'asdfasdf', 'Nate', 'Florendo', 'nate.florendo@ciit.edu.ph', '09123456789', 'Antipolo City', 'admin'),
-(2, 'DummyUser', 'asdfasdf', 'Dummy ', 'User', 'DummyUser@gmail.com', '09012345678', 'United States of America', 'user');
+(2, 'DummyUser', 'asdfasdf', 'Dummy ', 'User', 'DummyUser@gmail.com', '09012345678', '123 Cherry Blossom Ave, Pasig City, Philippines', 'user'),
+(3, 'JohnDoe', 'password3', 'John', 'Doe', 'JohnDoe@gmail.com', '09123456781', '456 Mango Street, Quezon City, Philippines', 'user'),
+(4, 'JaneSmith', 'password4', 'Jane', 'Smith', 'JaneSmith@gmail.com', '09123456782', '789 Pineapple Drive, Makati City, Philippines', 'user'),
+(5, 'RobertJohnson', 'password5', 'Robert', 'Johnson', 'RobertJohnson@gmail.com', '09123456783', '321 Banana Blvd, Mandaluyong City, Philippines', 'user'),
+(6, 'MichaelBrown', 'password6', 'Michael', 'Brown', 'MichaelBrown@gmail.com', '09123456784', '654 Coconut Lane, Marikina City, Philippines', 'user'),
+(7, 'EmilyDavis', 'password7', 'Emily', 'Davis', 'EmilyDavis@gmail.com', '09123456785', '987 Papaya Place, Manila City, Philippines', 'user'),
+(8, 'SarahMiller', 'password8', 'Sarah', 'Miller', 'SarahMiller@gmail.com', '09123456786', '135 Apple Court, Caloocan City, Philippines', 'user'),
+(9, 'JamesWilson', 'password9', 'James', 'Wilson', 'JamesWilson@gmail.com', '09123456787', '246 Orange Circle, Las Pinas City, Philippines', 'user'),
+(10, 'PatriciaMoore', 'password10', 'Patricia', 'Moore', 'PatriciaMoore@gmail.com', '09123456788', '369 Pear Parkway, Muntinlupa City, Philippines', 'user'),
+(11, 'RichardTaylor', 'password11', 'Richard', 'Taylor', 'RichardTaylor@gmail.com', '09123456789', '753 Grape Grove, Paranaque City, Philippines', 'user'),
+(12, 'LindaAnderson', 'password12', 'Linda', 'Anderson', 'LindaAnderson@gmail.com', '09123456790', '159 Peach Path, San Juan City, Philippines', 'user'),
+(13, 'WilliamThomas', 'password13', 'William', 'Thomas', 'WilliamThomas@gmail.com', '09123456791', '864 Watermelon Way, Taguig City, Philippines', 'user'),
+(14, 'ElizabethJackson', 'password14', 'Elizabeth', 'Jackson', 'ElizabethJackson@gmail.com', '09123456792', '951 Lemon Loop, Valenzuela City, Philippines', 'user'),
+(15, 'DavidWhite', 'password15', 'David', 'White', 'DavidWhite@gmail.com', '09123456793', '357 Lime Line, Malabon City, Philippines', 'user'),
+(16, 'JenniferHarris', 'password16', 'Jennifer', 'Harris', 'JenniferHarris@gmail.com', '09123456794', '468 Strawberry Street, Navotas City, Philippines', 'user'),
+(17, 'CharlesMartin', 'password17', 'Charles', 'Martin', 'CharlesMartin@gmail.com', '09123456795', '579 Raspberry Road, Pateros City, Philippines', 'user'),
+(18, 'SusanThompson', 'password18', 'Susan', 'Thompson', 'SusanThompson@gmail.com', '09123456796', '684 Blueberry Blvd, Antipolo City, Philippines', 'user'),
+(19, 'JosephGarcia', 'password19', 'Joseph', 'Garcia', 'JosephGarcia@gmail.com', '09123456797', '793 Blackberry Bend, Cainta City, Philippines', 'user'),
+(20, 'MargaretMartinez', 'password20', 'Margaret', 'Martinez', 'MargaretMartinez@gmail.com', '09123456798', '816 Cherry Circle, Taytay City, Philippines', 'user');
 
 --
 -- Indexes for dumped tables
@@ -109,6 +169,12 @@ ALTER TABLE `cart`
   ADD PRIMARY KEY (`order_id`),
   ADD KEY `product_id` (`product_id`),
   ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `inquiries`
+--
+ALTER TABLE `inquiries`
+  ADD PRIMARY KEY (`inquiry_id`);
 
 --
 -- Indexes for table `products`
@@ -131,6 +197,12 @@ ALTER TABLE `profile`
 --
 ALTER TABLE `cart`
   MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+
+--
+-- AUTO_INCREMENT for table `inquiries`
+--
+ALTER TABLE `inquiries`
+  MODIFY `inquiry_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `products`

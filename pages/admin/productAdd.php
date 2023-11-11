@@ -16,6 +16,32 @@ if ($_SESSION['role'] != "admin") {
     header('location: login.php');
 }
 
+$productTypeEnum = get_enum_values('products', 'product_type');
+    function get_enum_values( $table, $field )
+    {
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "onlinestore";
+    
+    // Create connection
+    $conn = new mysqli($servername, $username, $password, $dbname);
+    
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+    
+    $query = "SHOW COLUMNS FROM $table LIKE '$field'";
+    $result = mysqli_query($conn, $query);
+    $row = mysqli_fetch_array($result);
+    $type = $row['Type'];
+    preg_match("/^enum\(\'(.*)\'\)$/", $type, $matches);
+    $enum_values = explode("','", $matches[1]);
+    
+    return $enum_values;
+    }
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $servername = "localhost";
@@ -37,13 +63,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         'itemDesc' => '',
         'itemImage' => '',
         'itemPrice' => '',
-        'itemStock' => ''
+        'itemStock' => '',
+        'itemProductType' => '',
+        'itemBrandModel' => ''
     );
 
     $itemName = $_POST['itemName'];
     $itemDesc = $_POST['itemDesc'];
     $itemPrice = $_POST['itemPrice'];
     $itemStock = $_POST['itemStock'];
+    $itemProductType = $_POST['itemProductType'];
+    $itemBrandModel = $_POST['itemBrandModel'];
+
     if(isset($_FILES['itemImage'])) {
         $itemImage = $_FILES['itemImage'];
     }
@@ -68,6 +99,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errors['itemStock'] = '-Stock is required';
     } 
 
+    if (empty($itemProductType) || $itemProductType == "Set Product Type") {
+        $errors['itemProductType'] = '-Product Type is required';
+    }
+
+    if (empty($itemBrandModel)) {
+        $errors['itemBrandModel'] = '-Brand/Model is required';
+    }
     
 
     if (empty($itemImage['name'])) {
@@ -77,7 +115,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $target_dir = "../".$base_dir;
         $target_file = $target_dir . basename($itemImage["name"]);
         $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-        $newFileName = $itemName . "." . $imageFileType;
+        $newFileName = $itemBrandModel . "-" . $itemName . "." . $imageFileType;
         $newFilePath = $target_dir . $newFileName;
         $relativeFilePath = $base_dir . $newFileName;
     
@@ -113,7 +151,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $itemPrice = mysqli_real_escape_string($conn, $itemPrice);
         $itemStock = mysqli_real_escape_string($conn, $itemStock);
         
-        $sql = "INSERT INTO products(itemName,imagePath,description,price,stock) VALUES('$itemName','$itemImage','$itemDesc','$itemPrice','$itemStock')";
+        $sql = "INSERT INTO products(itemName,imagePath,description,price,stock,brand_model,product_type) VALUES('$itemName','$itemImage','$itemDesc','$itemPrice','$itemStock','$itemBrandModel','$itemProductType')";
         
         mysqli_query($conn, $sql);
         echo "success";
@@ -162,9 +200,27 @@ return;
 
                 <div style="padding-bottom: 0px; padding-left: 25px;">
 
+                    <h3 style="display: inline-block; width: 30%;">BRAND/MODEL: </h3>
+                    <input style="display: inline-block !important; padding: 25px 25px; width:69%;" type="text" id="inputBrandModel" placeholder="Brand/Model" required>
+
+                </div>
+
+                <div style="padding-bottom: 0px; padding-left: 25px;">
+                    <h3 style="display: inline-block; width: 30%;">PRODUCT TYPE: </h3>
+                    <select style="display: inline-block !important; padding: 0px 25px; width:69%; min-height: 75px;" id="inputProductType" required>
+                        <?php
+                            foreach($productTypeEnum as $type) {
+                                echo "<option value='".htmlspecialchars($type)."'>".htmlspecialchars($type)."</option>";
+                            }
+                        ?>
+                    </select>
+                </div>
+
+                <div style="padding-bottom: 0px; padding-left: 25px;">
+
                     <h3 style="display: inline-block; width: 30%;">DESCRIPTION: </h3>
                     <input style="display: inline-block !important; padding: 25px 25px; width:69%;" type="text" id="inputItemDescription" placeholder="Description" required>
-
+                
                 </div>
 
                 <div style="padding-bottom: 0px; padding-left: 25px;">

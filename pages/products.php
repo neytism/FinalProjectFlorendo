@@ -14,7 +14,8 @@ if (!$conn) {
     echo 'Connection error: ' . mysqli_connect_error();
 }
 
-$sql = 'SELECT product_id, itemName, description, imagePath, price, stock FROM products';
+$sql = 'SELECT product_id, itemName, description, imagePath, price, stock, product_type, brand_model FROM products ORDER BY CAST(product_type AS CHAR) ASC';
+
 
 $result = mysqli_query($conn, $sql);
 
@@ -23,7 +24,7 @@ $products = mysqli_fetch_all($result, MYSQLI_ASSOC);
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style=" scroll-behavior: auto;">
 
 <head>
     <meta charset="UTF-8">
@@ -58,11 +59,18 @@ $products = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
                 <li><a href="../index.php">Home</a></li>
                 <li><a href="customercare.php">Contact</a></li>
-                <li><a href="cart.php">Cart</a></li>
+                <li><?php if (isset($_SESSION['user_id'])) {
+                echo "<a href=\"cart.php\">Cart</a>";
+              } else {
+                echo "<a href=\"login.php\">Log in</a>";
+              } ?></li>
             </div>
         </ul>
     </nav>
+    
+    <a id="goToTop" style="background-color: white; height: 70px; width: 70px; display: none; justify-content: center; align-items: center; border-radius: 50%; position: fixed; bottom: 15px; right: 15px; z-index: 100; border: 1px solid gray; text-decoration: none;" href="#">TOP</a>
 
+    
     
 
     <div class="products">
@@ -84,36 +92,43 @@ $products = mysqli_fetch_all($result, MYSQLI_ASSOC);
                 
                 ?>
                 
-                <div id="cardHolder" class="cardHolder col-xs-12 col-sm-6 col-md-3">
-                    <div class="card">
-                        <img src="<?php echo htmlspecialchars($product['imagePath']) ?>"
-                            alt="<?php echo htmlspecialchars($product['description']) ?>" class="img-responsive">
-                        <div class="caption">
-                            <h3 id="productLabel" class="productLabel name alt">
-                                <?php echo htmlspecialchars($product['itemName']) ?>
-                            </h3>
-                            <p id="productDesc" class="productDesc description">
-                                <?php echo htmlspecialchars($product['description']) ?>
-                            </p>
-                            <p class="btnHolder">
-                                <a href="productFocus.php?productID=<?php echo htmlspecialchars( $product['product_id']) ?>" class="btn buy" role="button">₱
-                                    <?php echo htmlspecialchars($product['price']) ?>
-                                </a>
-                               
-                                <a class="btn cart" role="button" <?php if (!isset($_SESSION["user_id"])) {
+                <div id="cardHolder" class="cardHolder col-xs-12 col-sm-6 col-md-3" onclick="location.href='productFocus.php?productID=<?php echo htmlspecialchars($product['product_id']) ?>'">
+                    <div id="<?php echo htmlspecialchars($product['product_id']) ?>" class="card">
+                            <img src="<?php echo htmlspecialchars($product['imagePath']) ?>"
+                                alt="<?php echo htmlspecialchars($product['description']) ?>" class="img-responsive">
+
+                            <div class="caption">
+                                <h3 id="productLabel" class="productLabel name alt">
+                                    <?php echo htmlspecialchars($product['itemName']) ?>
+                                </h3>
+
+                                <p style="display:none;" id="productDesc" class="productDesc description">
+                                    <?php echo htmlspecialchars($product['description']) ?>
+                                </p>
+
+                                <p class="btnHolder">
+
+                                    <a style="pointer-events: none;"
+                                        class="btn buy" role="button">₱
+                                        <?php echo htmlspecialchars($product['price']) ?>
+                                    </a>
+                
+                                    <a class="btn cart" role="button" <?php if (!isset($_SESSION["user_id"])) {
                                         echo 'href="login.php"';
                                     } else {
-                                        echo 'onclick="addToCart(event,' . $product['product_id'] . ')"';
+                                        echo 'onclick="event.stopPropagation(); addToCart(event,' . $product['product_id'] . ')"';
                                     } ?>>
-                                
-                                        <span class="glyphicon glyphicon-shopping-cart">
+                
+                                        <span style="color: black;" class="glyphicon glyphicon-shopping-cart">
                                         </span>
                                     </a>
+                                    
                                 </p>
+                            
                             </div>
-                        </div>
                     </div>
-
+                </div>
+            
             <?php }
 
             ?>

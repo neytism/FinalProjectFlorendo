@@ -13,6 +13,24 @@ window.addEventListener('mousemove', function (e) {
     }
 });
 
+//go  to top
+window.onscroll = function() {
+    window.onscroll = function() {
+        var topDiv = document.getElementById("goToTop");
+        if (topDiv) {
+            var scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+            var triggerPosition = 1000; 
+
+            if (scrollPosition < triggerPosition) {
+                topDiv.style.display = "none";
+            } else {
+                topDiv.style.display = "flex";
+            }
+        }
+    };
+
+};
+
 //for search
 $(document).ready(function(){
     $("#search").on("keyup", function() {
@@ -23,10 +41,16 @@ $(document).ready(function(){
             var listName = card.find(".name").text().toLowerCase();
             var listLabel = card.find(".alt").text().toLowerCase();
             var listDesc = card.find(".description").text().toLowerCase();
+            var listImageAlt = card.find("img").attr('alt');
+            listImageAlt = listImageAlt ? listImageAlt.toLowerCase() : null;
 
             var isSearchMatch = (listName.indexOf(value) > -1) ||
                                (listLabel.indexOf(value) > -1) ||
                                (listDesc.indexOf(value) > -1);
+                               
+                               if (listImageAlt) {
+                                isSearchMatch = isSearchMatch || (listImageAlt.indexOf(value) > -1);
+                            }
 
             card.toggle(isSearchMatch);
         });
@@ -52,7 +76,7 @@ function checkLogin(event) {
             ChangeText(warningText, "Redirecting you to home page...", "rgba(37, 255, 37, 0.13)");
             setTimeout(function(){
                 document.location.href = '../index.php';
-           }, 2000); 
+           }, 1000); 
 
         } else{
             ChangeText(warningText, this.responseText,"rgba(255, 37, 37, 0.13)");
@@ -87,7 +111,7 @@ function checkSignUp(event) {
             ChangeText(warningText, this.responseText, "rgba(37, 255, 37, 0.13)");
             setTimeout(function(){
                 document.location.href = 'login.php';
-           },2000); 
+           },1000); 
         
         } else{
             ChangeText(warningText, this.responseText, "rgba(255, 37, 37, 0.13)");
@@ -119,7 +143,7 @@ function checkSignUp(event) {
             ChangeText(warningText, "inquiry sent, redirecting to home...", "rgba(37, 255, 37, 0.13)");
             setTimeout(function(){
                 document.location.href = '../index.php';
-           },2000); 
+           },1000); 
         
         } else{
             ChangeText(warningText, this.responseText, "rgba(255, 37, 37, 0.13)");
@@ -141,6 +165,8 @@ function checkAddProd(event, phpFile, itemID) {
     let itemImage = document.getElementById("inputItemImage").files[0];
     let itemPrice = document.getElementById("inputItemPrice").value;
     let itemStock = document.getElementById("inputItemStock").value;
+    let itemBrandModel = document.getElementById("inputBrandModel").value;
+    let itemProductType = document.getElementById("inputProductType").value;
 
     let formData = new FormData();
     formData.append('itemName', itemName);
@@ -148,6 +174,8 @@ function checkAddProd(event, phpFile, itemID) {
     formData.append('itemImage', itemImage);
     formData.append('itemPrice', itemPrice);
     formData.append('itemStock', itemStock);
+    formData.append('itemBrandModel', itemBrandModel);
+    formData.append('itemProductType', itemProductType);
     if (itemID) {
         formData.append('itemID', itemID)
     }
@@ -162,7 +190,7 @@ function checkAddProd(event, phpFile, itemID) {
             ChangeText(warningText, this.responseText, "rgba(37, 255, 37, 0.13)");
             setTimeout(function(){
                 document.location.href = 'productList.php';
-           },2000); 
+           },1000); 
         } else{
             ChangeText(warningText, this.responseText, "rgba(255, 37, 37, 0.13)");
         }
@@ -206,6 +234,23 @@ function removeItemFromCart(event, orderID) {
     
     xhr.send('orderID=' + orderID);
 
+}
+
+function showPassword(event) {
+    event.preventDefault();
+    var x = document.getElementById("inputPassword");
+    var button = event.target;
+    if (x.type === "password") {
+        x.type = "text";
+        button.classList.remove("glyphicon-eye-open");
+        button.classList.add("glyphicon-eye-close");
+        button.title = "Hide Password";
+    } else {
+        x.type = "password";
+        button.classList.remove("glyphicon-eye-close");
+        button.classList.add("glyphicon-eye-open");
+        button.title = "Show Password";
+    }
 }
 
 

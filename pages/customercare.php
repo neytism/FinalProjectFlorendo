@@ -44,7 +44,7 @@
                     <textarea id="inputConcern" rows="4" cols="50" placeholder="Please enter query"></textarea>
                 </div>
                 <div></div>
-                <a><button type="button" class="loginBtn submit" onclick="checkInquiry(event)">Submit</button></a>
+                <a style="color: white;"><button type="button" class="loginBtn submit" onclick="checkInquiry(event)">Submit</button></a>
                 <label class="warning" id="warningTextLogIn"></label>
 
 

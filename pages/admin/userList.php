@@ -29,7 +29,7 @@ if (!$conn) {
     echo 'Connection error: ' . mysqli_connect_error();
 }
 
-$sql = 'SELECT user_id, username, firstName, lastName, email, mobile, address FROM profile';
+$sql = 'SELECT user_id, username, firstName, lastName, email, mobile, address, role FROM profile';
 
 $result = mysqli_query($conn, $sql);
 
@@ -91,7 +91,7 @@ $profiles = mysqli_fetch_all($result, MYSQLI_ASSOC);
                     </tr>
                 </thead>
                 <tbody>
-
+                    
                     <?php
 
                     foreach ($profiles as $profile) { ?>
@@ -103,11 +103,14 @@ $profiles = mysqli_fetch_all($result, MYSQLI_ASSOC);
                             <td class="description"><?php echo htmlspecialchars($profile['email']) ?></td>
                             <td ><?php echo htmlspecialchars($profile['mobile']) ?></td>
                             <td ><?php echo htmlspecialchars($profile['address']) ?></td>
-                            <td ><a class="btn cart"
-                                    style="color: white; background-color: gray;" role="button" onclick="deleteUser(event,<?php echo $profile['user_id'] ?>)">delete</a></td>
+                            <td >
+                            <?php if($profile['user_id'] != $_SESSION['user_id']) { ?>
+                                <a class="btn cart" style="color: white; background-color: gray;" role="button" onclick="deleteUser(event,<?php echo $profile['user_id'] ?>)">delete</a>
+                            <?php } ?>
+                            </td>
                         </tr>
                     <?php }
-
+                    
                     ?>
 
                 </tbody>

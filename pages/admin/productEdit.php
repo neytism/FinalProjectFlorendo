@@ -29,9 +29,22 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+$productTypeEnum = get_enum_values($conn, 'products', 'product_type');
+function get_enum_values( $conn, $table, $field )
+{
+   $query = "SHOW COLUMNS FROM $table LIKE '$field'";
+   $result = mysqli_query($conn, $query);
+   $row = mysqli_fetch_array($result);
+   $type = $row['Type'];
+   preg_match("/^enum\(\'(.*)\'\)$/", $type, $matches);
+   $enum_values = explode("','", $matches[1]);
+   
+   return $enum_values;
+}
+
 $temp_id = isset($_GET['productID']) ? $_GET['productID'] : null;
 
-$sql = "SELECT itemName, description, imagePath, price, stock FROM products WHERE product_id='$temp_id'";
+$sql = "SELECT itemName, product_type, brand_model, description, imagePath, price, stock FROM products WHERE product_id='$temp_id'";
 $result = mysqli_query($conn, $sql);
 $tempProduct = mysqli_fetch_assoc($result);
 
@@ -43,7 +56,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         'itemDesc' => '',
         'itemImage' => '',
         'itemPrice' => '',
-        'itemStock' => ''
+        'itemStock' => '',
+        'itemProductType' => '',
+        'itemBrandModel' => ''
+
     );
     
     $itemID = $_POST['itemID'];
@@ -51,12 +67,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $itemDesc = $_POST['itemDesc'];
     $itemPrice = $_POST['itemPrice'];
     $itemStock = $_POST['itemStock'];
+    $itemProductType = $_POST['itemProductType'];
+    $itemBrandModel = $_POST['itemBrandModel'];
     $itemImage = '';
 
-    $sql = "SELECT itemName, description, imagePath, price, stock FROM products WHERE product_id='$itemID'";
-$result = mysqli_query($conn, $sql);
-$tempProduct = mysqli_fetch_assoc($result);
-    
+    $sql = "SELECT itemName, description, imagePath, price, stock, product_type, brand_model FROM products WHERE product_id='$itemID'";
+    $result = mysqli_query($conn, $sql);
+    $tempProduct = mysqli_fetch_assoc($result);
+        
     if(isset($_FILES['itemImage'])) {
         $itemImage = $_FILES['itemImage'];
     } else{
@@ -82,6 +100,14 @@ $tempProduct = mysqli_fetch_assoc($result);
     if (empty($itemStock)) {
         $itemStock = $tempProduct['stock'];
     } 
+
+    if (empty($itemBrandModel)) {
+        $itemBrandModel = $tempProduct['brand_model'];
+    } 
+
+    if (empty($itemProductType) || $itemProductType == "Set Product Type") {
+        $itemProductType = $tempProduct['product_type'];
+    }
 
     
 
@@ -123,8 +149,10 @@ $tempProduct = mysqli_fetch_assoc($result);
         $itemDesc = mysqli_real_escape_string($conn, $itemDesc);
         $itemPrice = mysqli_real_escape_string($conn, $itemPrice);
         $itemStock = mysqli_real_escape_string($conn, $itemStock);
+        $itemProductType = mysqli_real_escape_string($conn, $itemProductType);
+        $itemBrandModel = mysqli_real_escape_string($conn, $itemBrandModel);
         
-        $sql = "UPDATE products SET itemName='$itemName', imagePath='$itemImage', description='$itemDesc', price='$itemPrice', stock='$itemStock' WHERE product_id='$itemID'";
+        $sql = "UPDATE products SET itemName='$itemName', imagePath='$itemImage', description='$itemDesc', price='$itemPrice', stock='$itemStock', brand_model='$itemBrandModel', product_type='$itemProductType' WHERE product_id='$itemID'";
         
         
         mysqli_query($conn, $sql);
@@ -168,10 +196,33 @@ return;
                 <div style="padding-bottom: 0px; padding-left: 25px;">
 
                     <h3 style="display: inline-block; width: 30%;">ITEM NAME: </h3>
-                    <input style="display: inline-block !important; padding: 25px 25px; width:69%;" 69%type="text" id="inputItemName" placeholder="Item Name" value="<?php echo htmlspecialchars($tempProduct['itemName']) ?>" required>
+                    <input style="display: inline-block !important; padding: 25px 25px; width:69%; height: 50px;" type="text" id="inputItemName" placeholder="Item Name" value="<?php echo htmlspecialchars($tempProduct['itemName']) ?>" required>
 
                 </div>
 
+                <div style="padding-bottom: 0px; padding-left: 25px;">
+
+                    <h3 style="display: inline-block; width: 30%;">BRAND/MODEL: </h3>
+                    <input style="display: inline-block !important; padding: 25px 25px; width:69%; height: 50px;" type="text" id="inputBrandModel" placeholder="Brand/Model" value="<?php echo htmlspecialchars($tempProduct['brand_model']) ?>" required>
+
+                </div>
+                
+                <div style="padding-bottom: 0px; padding-left: 25px;">
+                    <h3 style="display: inline-block; width: 30%;">PRODUCT TYPE: </h3>
+                    <select style="display: inline-block !important; padding: 0px 25px; width:69%; height: 50px;" id="inputProductType" required>
+                        <?php
+                            foreach($productTypeEnum as $type) {
+                                if($tempProduct['product_type'] == $type){
+                                    echo "<option selected=\"selected\" value='".htmlspecialchars($type)."'>".htmlspecialchars($type)."</option>";
+                                } else{
+                                    echo "<option value='".htmlspecialchars($type)."'>".htmlspecialchars($type)."</option>";
+                                }
+                                
+                            }
+                        ?>
+                    </select>
+                </div>
+                
                 <div style="padding-bottom: 0px; padding-left: 25px;">
                     
                     <h3 style="display: inline-block; width: 30%;">DESCRIPTION: </h3>
@@ -191,14 +242,14 @@ return;
                 <div style="padding-bottom: 0px; padding-left: 25px;">
 
                     <h3 style="display: inline-block; width: 30%;">PRICE: </h3>
-                    <input style="display: inline-block !important; padding: 25px 25px; width:69%;" type="number" id="inputItemPrice" placeholder="Price" value="<?php echo htmlspecialchars($tempProduct['price']) ?>" required>
+                    <input style="display: inline-block !important; padding: 25px 25px; width:69%; height: 50px;" type="number" id="inputItemPrice" placeholder="Price" value="<?php echo htmlspecialchars($tempProduct['price']) ?>" required>
 
                 </div>
 
                 <div style="padding-bottom: 0px; padding-left: 25px;">
 
-                    <h3 style="display: inline-block; width: 30%;">STOCK: </h3>
-                    <input style="display: inline-block !important; padding: 25px 25px; width:69%;" type="number" id="inputItemStock" placeholder="Stock" value="<?php echo htmlspecialchars($tempProduct['stock']) ?>" required>
+                    <h3 style="display: inline-block; width: 30%; ">STOCK: </h3>
+                    <input style="display: inline-block !important; padding: 25px 25px; width:69%; height: 50px;" type="number" id="inputItemStock" placeholder="Stock" value="<?php echo htmlspecialchars($tempProduct['stock']) ?>" required>
 
                 </div>
 
