@@ -21,6 +21,8 @@ $result = mysqli_query($conn, $sql);
 
 $products = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
+$isLoggedIn = isset($_SESSION['user_id']);
+
 ?>
 
 <!DOCTYPE html>
@@ -29,7 +31,7 @@ $products = mysqli_fetch_all($result, MYSQLI_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="assets/images/iconS.png">
+    <link rel="icon" type="image/x-icon" href="../assets/images/iconS.png">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
@@ -38,6 +40,11 @@ $products = mysqli_fetch_all($result, MYSQLI_ASSOC);
 </head>
 
 <body class="stillBackground" >
+
+    <div id="productDetailModal" >
+        
+    
+    </div>
 
 
     <div class="notification" id="notification">
@@ -69,7 +76,7 @@ $products = mysqli_fetch_all($result, MYSQLI_ASSOC);
     </nav>
     
     <a id="goToTop" style="background-color: white; height: 70px; width: 70px; display: none; justify-content: center; align-items: center; border-radius: 50%; position: fixed; bottom: 15px; right: 15px; z-index: 100; border: 1px solid gray; text-decoration: none;" href="#">TOP</a>
-
+    
     
     
 
@@ -92,7 +99,7 @@ $products = mysqli_fetch_all($result, MYSQLI_ASSOC);
                 
                 ?>
                 
-                <div id="cardHolder" class="cardHolder col-xs-12 col-sm-6 col-md-3" onclick="location.href='productFocus.php?productID=<?php echo htmlspecialchars($product['product_id']) ?>'">
+                <div id="cardHolder" class="cardHolder col-xs-12 col-sm-6 col-md-3" onclick="showDetails(<?php echo htmlspecialchars(json_encode($product)) ?>,<?php echo $isLoggedIn ? 'true' : 'false'; ?>)">
                     <div id="<?php echo htmlspecialchars($product['product_id']) ?>" class="card">
                             <img src="<?php echo htmlspecialchars($product['imagePath']) ?>"
                                 alt="<?php echo htmlspecialchars($product['description']) ?>" class="img-responsive">
@@ -119,8 +126,7 @@ $products = mysqli_fetch_all($result, MYSQLI_ASSOC);
                                         echo 'onclick="event.stopPropagation(); addToCart(event,' . $product['product_id'] . ')"';
                                     } ?>>
                 
-                                        <span style="color: black;" class="glyphicon glyphicon-shopping-cart">
-                                        </span>
+                                        <span style="color: black;" class="glyphicon glyphicon-shopping-cart"></span>
                                     </a>
                                     
                                 </p>
@@ -139,7 +145,7 @@ $products = mysqli_fetch_all($result, MYSQLI_ASSOC);
     </div>
     
     <script type="text/javascript" src="../js/script.js" id="rendered-js"></script>
-
+                             
 </body>
 
 </html>

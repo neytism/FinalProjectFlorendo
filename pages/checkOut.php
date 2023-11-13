@@ -74,10 +74,10 @@ $tempProduct = mysqli_fetch_assoc($result);
 
                 
                 <button <?php if (!isset($_SESSION["user_id"])) {
-    echo 'onclick="window.location.href=\'login.php\'"';
-}?> type="button" class="btn btn-success" style="position: absolute; right: 30px; bottom: 30px;" aria-label="Save">
-    BUY NOW
-</button>
+                    echo 'onclick="window.location.href=\'login.php\'"';
+                }?> type="button" class="btn btn-success" style="position: absolute; right: 30px; bottom: 30px;" aria-label="Save">
+                    BUY NOW
+                </button>
             
             </div>
         </div>

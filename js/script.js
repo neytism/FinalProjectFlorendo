@@ -249,7 +249,7 @@ function showPassword(event) {
         x.type = "password";
         button.classList.remove("glyphicon-eye-close");
         button.classList.add("glyphicon-eye-open");
-        button.title = "Show Password";
+        button.title = "Show     Password";
     }
 }
 
@@ -404,6 +404,44 @@ function deleteUser(event, userID) {
 
 }
 
+function showDetails(product, isLoggedIn){
+    var x = document.getElementById('productDetailModal');
+    
+    var details = '<div class="modalHolder">';
+    details += '<div class="productModal">';
+    details += '<a type="button" class="close" aria-label="Close" onclick="hideProductDetail()"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>';
+    details += '<div class="modalContent">';
+    details += '<div class="modalImageHolder">';
+    details += '<div class="modalImageDiv"><img src="' + product['imagePath'] + '" alt="'+ product['itemName'] +'"></div></div>';
+    details += '<div style="width: 45%;">';
+    details += '<h2>'+ product['itemName'] +'</h2>';
+    details += '<p>'+product['description']+'</p>';
+    details += '<p>Brand/Model: ' + product['brand_model'] + '</p>';
+    details += '<p>Price: ₱ '+ product['price'] +'</p>';
+    details += '<p>Stock: '+product['stock']+' remaining.</p></div></div>';
+    
+    //details += '<button onclick="addToCart(event,'+ product['product_id'] +'" type="button" class="btn btn-success" aria-label="Save"><span class="glyphicon glyphicon-shopping-cart"></span></button>';
+    details += '<button type="button" ';
+    
+    if (!isLoggedIn){
+        details += 'onclick="window.location.href=\'login.php\'"';
+    } else{
+        details += 'onclick="addToCart(event,'+ product['product_id'] +')"';
+    }
+
+    details += ' class="btn btn-success" aria-label="Save"><span class="glyphicon glyphicon-shopping-cart"></span></button>';
+    details += '</div></div>';
+    
+    x.innerHTML = details;
+    x.style.display = 'block';
+}
+
+
+function hideProductDetail(){
+    var x = document.getElementById('productDetailModal');
+    
+    x.style.display = 'none';
+}
 
 
 
