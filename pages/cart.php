@@ -22,7 +22,7 @@ $userID = $_SESSION['user_id'];
 $totalAmount = 0;
 $totalQuantity = 0;
 
-$sql = "SELECT cart.order_id, cart.product_id, cart.quantity, products.itemName, products.imagePath, products.price FROM cart INNER JOIN products ON cart.product_id = products.product_id WHERE cart.user_id='$userID'";
+$sql = "SELECT orders.order_id, orders.product_id, orders.quantity, products.itemName, products.imagePath, products.price FROM orders INNER JOIN products ON orders.product_id = products.product_id WHERE orders.user_id='$userID' AND orders.status = 'OnCart'";
 
 $result = mysqli_query($conn, $sql);
 
@@ -53,7 +53,7 @@ $cartItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
         <div style="display: flex; align-items: center; vertical-align: center;">
             <h3 style="margin-right: 20px;">SUBTOTAL: </h3>
             <h3 class="total-amount" style="margin-right: 50px;">₱ 0.00</h3>
-            <a href="#" class="total-quantity btn cart"
+            <a onclick="checkOut()" class="total-quantity btn cart"
                 style="color: white; background-color: green; margin-right: 30px; align-self: center;"
                 role="button">CHECKOUT(0)</a>
             <h3 style="margin-right: 20px;"></h3>
@@ -109,7 +109,7 @@ $cartItems = mysqli_fetch_all($result, MYSQLI_ASSOC);
                         foreach ($cartItems as $cartItem) { ?>
                             <tr class="cardHolder" style="min-height:80px;">
                                 <td><input class="cart-checkbox" style="display: block; height: 20px;" type="checkbox"
-                                        name="checkbox_<?php echo $cartItem['product_id'] ?>" /></td>
+                                        name="checkbox_<?php echo $cartItem['product_id'] ?>" data-order-id="<?php echo $cartItem['order_id'] ?>" /></td>
                                 <td style="width: 150px;"><img src="<?php echo htmlspecialchars($cartItem['imagePath']) ?>"
                                         style="height: 80px; width: 80px; object-fit: contain;"
                                         alt="<?php echo htmlspecialchars($cartItem['itemName']) ?>"></td>

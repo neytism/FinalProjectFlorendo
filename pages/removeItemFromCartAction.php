@@ -20,7 +20,7 @@ $orderID = $_POST['orderID'];
 $userID = mysqli_real_escape_string($conn, $userID);
 $orderID = mysqli_real_escape_string($conn, $orderID);
 
-$sql = "DELETE FROM cart WHERE user_id='$userID' AND order_id='$orderID'";
+$sql = "DELETE FROM orders WHERE user_id='$userID' AND order_id='$orderID' AND status = 'OnCart' ";
 if (mysqli_query($conn, $sql)) {
     echo "Deleted successfully";
 } else {

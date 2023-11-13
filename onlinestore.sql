@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 12, 2023 at 12:57 AM
+-- Generation Time: Nov 13, 2023 at 11:54 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -20,38 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `onlinestore`
 --
-
--- --------------------------------------------------------
-
---
--- Table structure for table `cart`
---
-
-CREATE TABLE `cart` (
-  `order_id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL,
-  `quantity` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `cart`
---
-
-INSERT INTO `cart` (`order_id`, `product_id`, `quantity`, `user_id`) VALUES
-(34, 1, 2, 1),
-(35, 3, 7, 1),
-(36, 2, 6, 1),
-(37, 5, 7, 1),
-(38, 4, 7, 1),
-(39, 5, 2, 2),
-(40, 26, 1, 2),
-(41, 2, 1, 2),
-(42, 3, 1, 2),
-(43, 4, 1, 2),
-(44, 6, 1, 2),
-(45, 1, 1, 2),
-(46, 27, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -94,6 +62,48 @@ INSERT INTO `inquiries` (`inquiry_id`, `firstName`, `lastName`, `email`, `contac
 (18, 'Joseph', 'Garcia', 'JosephGarcia@gmail.com', '09123456797', 'Hello Gizmoverse! I am impressed with your commitment to quality.', '2023-11-11 22:19:00'),
 (19, 'Margaret', 'Martinez', 'MargaretMartinez@gmail.com', '09123456798', 'Hello Gizmoverse! I am interested in learning more about your company.', '2023-11-11 22:20:00'),
 (20, 'Josephine', 'Walker', 'JosephineWalker@gmail.com', '09123456799', 'Hello Gizmoverse! I am looking forward to your next product!', '2023-11-11 22:21:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orders`
+--
+
+CREATE TABLE `orders` (
+  `order_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `status` enum('OnCart','Cancelled','Delivered','InTransit','PickUpAvailable','OrderProblem','Processing','Returned','Completed') NOT NULL DEFAULT 'OnCart'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`order_id`, `product_id`, `quantity`, `user_id`, `status`) VALUES
+(34, 1, 2, 1, 'OnCart'),
+(35, 3, 7, 1, 'OnCart'),
+(36, 2, 6, 1, 'OnCart'),
+(37, 5, 7, 1, 'OnCart'),
+(38, 4, 7, 1, 'OnCart'),
+(39, 5, 2, 2, 'Processing'),
+(40, 26, 1, 2, 'Processing'),
+(41, 2, 1, 2, 'Processing'),
+(42, 3, 4, 2, 'Processing'),
+(43, 4, 24, 2, 'Completed'),
+(44, 6, 1, 2, 'Processing'),
+(45, 1, 1, 2, 'Processing'),
+(46, 27, 1, 2, 'Processing'),
+(68, 4, 1, 2, 'Processing'),
+(69, 3, 1, 2, 'Processing'),
+(70, 4, 1, 2, 'Processing'),
+(71, 5, 2, 2, 'OnCart'),
+(72, 6, 1, 2, 'OnCart'),
+(73, 1, 6, 2, 'Processing'),
+(74, 27, 1, 2, 'OnCart'),
+(75, 26, 1, 2, 'OnCart'),
+(76, 2, 1, 2, 'Processing');
 
 -- --------------------------------------------------------
 
@@ -175,18 +185,18 @@ INSERT INTO `profile` (`user_id`, `username`, `password`, `firstName`, `lastName
 --
 
 --
--- Indexes for table `cart`
---
-ALTER TABLE `cart`
-  ADD PRIMARY KEY (`order_id`),
-  ADD KEY `product_id` (`product_id`),
-  ADD KEY `user_id` (`user_id`);
-
---
 -- Indexes for table `inquiries`
 --
 ALTER TABLE `inquiries`
   ADD PRIMARY KEY (`inquiry_id`);
+
+--
+-- Indexes for table `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`order_id`),
+  ADD KEY `product_id` (`product_id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `products`
@@ -205,16 +215,16 @@ ALTER TABLE `profile`
 --
 
 --
--- AUTO_INCREMENT for table `cart`
---
-ALTER TABLE `cart`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
-
---
 -- AUTO_INCREMENT for table `inquiries`
 --
 ALTER TABLE `inquiries`
   MODIFY `inquiry_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
+-- AUTO_INCREMENT for table `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 
 --
 -- AUTO_INCREMENT for table `products`
@@ -233,11 +243,11 @@ ALTER TABLE `profile`
 --
 
 --
--- Constraints for table `cart`
+-- Constraints for table `orders`
 --
-ALTER TABLE `cart`
-  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `profile` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `orders`
+  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `profile` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

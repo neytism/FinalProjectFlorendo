@@ -15,16 +15,54 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$temp_id = $_GET['productID'];
+if(!isset($_SESSION['user_id'])) {
+    header('location: login.php');
+}
 
-$sql = "SELECT itemName, description, imagePath, price, stock, brand_model FROM products WHERE product_id='$temp_id'";
+if (isset($_POST['orderIDsFromCart'])) {
+    $_SESSION['orderIDs'] = json_decode($_POST['orderIDsFromCart']);
+}
 
-$result = mysqli_query($conn, $sql);
+$totalAmount = 0;
 
-$tempProduct = mysqli_fetch_assoc($result);
+if (isset($_SESSION['orderIDs'])) {
+    $orderIDs = $_SESSION['orderIDs'];
+    $userID = $_SESSION['user_id'];
+    
+    // Convert orderIDs array to comma-separated string
+    $orderIDsStr = implode(',', $orderIDs);
+    
+    // Prepare SQL query
+    $orderSql = "SELECT orders.order_id, orders.quantity, products.itemName, products.price, products.imagePath
+            FROM orders
+            INNER JOIN products ON orders.product_id = products.product_id
+            WHERE orders.order_id IN ($orderIDsStr) AND orders.user_id = $userID";
+    
+    $products = mysqli_query($conn, $orderSql);
 
+    while ($product = mysqli_fetch_assoc($products)) {
+        $totalAmount += $product['quantity'] * $product['price'];
+    }
+}
+
+$sql = "SELECT * FROM profile WHERE user_id = '$_SESSION[user_id]'";
+      
+$result = $conn->query($sql);
+
+while ($row = $result->fetch_assoc()) {
+  
+  $uname = $row["username"];
+  $firstName = $row["firstName"];
+  $lastName = $row["lastName"];
+  $email = $row["email"];
+  $num = $row["mobile"];
+  $address = $row["address"];
+
+}
+
+
+    
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -41,42 +79,83 @@ $tempProduct = mysqli_fetch_assoc($result);
 </head>
 
 <body style="background-color: rgb(10, 10, 10);">
-
+    
+<div onclick="location.href = 'cart.php';" id="thanks" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); color: white; display: none; justify-content: center; align-items: center; z-index: 130;">
+    THANK YOU FOR PURCHASING
+</div>
+    
+    
 
     <div class="bodyholder login" style="background-image: url('../assets/Images/WebBackground3.png');">
 
         
-    <div id="overlayWindow" style="position:fixed; height: 100vh; width: 100vw; z-index: 100; display:block;">
+    <div id="checkOutModal" style="position:fixed; height: 100vh; width: 100vw; z-index: 100; display:block;">
         <div style="height: 100%; width: 100%;padding: 8% 15%;">
             <div style="position: relative; height: 100%; width: 100%; background-color: white; border-radius: 30px; box-shadow: 0px 0px 50px rgba(0, 0, 0, 1);">
-                <a href="products.php#<?php echo htmlspecialchars($temp_id) ?>" type="button" class="close" style="position: absolute; right: 30px; top: 30px;" aria-label="Close">
+                <a onclick="location.href = 'cart.php';" type="button" class="close" style="position: absolute; right: 30px; top: 30px;" aria-label="Close">
                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                 </a>
                 
                 <div style="display: flex; justify-content: space-between; padding: 30px; height: 100%;">
+                    <!-- left -->
+                    <div style="width: 49%; display: flex; flex-direction: column; justify-content: space-between;">
 
-                    <div style="width: 45%; display: flex; flex-direction: column; justify-content: space-between;">
+                    <div class="container table-responsive py-5" style="color: black; font-family: LaachirDeeper !important;font-size: larger; width: 100%;">
+                        <table class="myTable table">
+                            
+                            <tbody>
 
-                        <div style="flex-grow: 1; display: flex; align-items: center; height: 100%;">
-                            <img src="<?php echo htmlspecialchars($tempProduct['imagePath']) ?>" alt="Product Image" style="height: 100%; width: 100%; object-fit: contain;">
-                        </div>
+                                <?php
+                                
+                                    foreach ($products as $product) { ?>
+
+                                        <tr class="cardHolder" style="background-color: rgba(0,0,0,0.05);">
+                                            
+                                            <td style="width: 55px;"><img src="<?php echo htmlspecialchars($product['imagePath']) ?>"
+                                                style="height: 50px; width: 50px; object-fit: contain;"></td>
+
+                                            <td class="name" ><?php echo htmlspecialchars($product['itemName']) ?></td>
+                            
+                    
+                                            <td style="text-align: right !important; padding-right: 25px;">₱ <?php echo htmlspecialchars($product['price']. ' x ' .$product['quantity']) ?></td>
+                                        
+                                        </tr>
+                                    <?php }
+                                
+                                ?>
+                            
+                                
+                            
+                            </tbody>
+                        
+                        </table>
 
                     </div>
                     
-                    <div style="width: 45%;">
-                        <h2><?php echo htmlspecialchars($tempProduct['itemName']) ?></h2>
-                        <p><?php echo htmlspecialchars($tempProduct['description']) ?></p>
-                        <p>Brand/Model: <?php echo htmlspecialchars($tempProduct['brand_model']) ?></p>
-                        <p>Price: ₱ <?php echo htmlspecialchars($tempProduct['price']) ?></p>
-                        <p>Stock: <?php echo htmlspecialchars($tempProduct['stock']) ?> remaining.</p>
+                    </div>
+                    
+                    <!-- right -->
+                    <div style="width: 49%;">
+                        <h2>CHECKOUT</h2>
+                        <p><?php echo htmlspecialchars($address) ?></p>
+                        <p><?php echo htmlspecialchars($num) ?></p>
+                        <p><?php echo htmlspecialchars($email) ?></p>
+                        <p><?php echo htmlspecialchars($lastName .', '. $firstName) ?></p>
+                        <p>TOTAL AMOUNT: ₱ <?php echo htmlspecialchars($totalAmount) ?><br><br></p>
+                        <p>Mode of payment</p>
+                        <select onchange="changeMOP()" name="modeOfPayment" id="modeOfPayment" style="background-color: rgba(0,0,0,0.05); color: black; margin-bottom: 10px;">
+                            <option value="COD">Cash on Delivery</option>
+                            <option value="CC">Credit Card</option>
+                        </select>
+                        <div id="mopHolder" >
+                        
+                        </div>
                     </div>
                 </div>
 
                 
-                <button <?php if (!isset($_SESSION["user_id"])) {
-                    echo 'onclick="window.location.href=\'login.php\'"';
-                }?> type="button" class="btn btn-success" style="position: absolute; right: 30px; bottom: 30px;" aria-label="Save">
-                    BUY NOW
+                <button onclick="confirmCheckOut()" type="button" class="btn btn-success" style="position: absolute; right: 30px; bottom: 30px;" aria-label="Save">
+                    CONFIRM
                 </button>
             
             </div>

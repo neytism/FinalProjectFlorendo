@@ -90,6 +90,18 @@ if (isset($_GET['logout'])) {
                     </a>
                 </div>
 
+                <div id="productListEdit" class="col-md-3"> 
+                    <a href="ordersList.php" style="text-decoration: none;">
+                        <div class="adminCard" style="height: 240px;">
+                        <span class="glyphicon glyphicon-shopping-cart" style="font-size: 130px; text-align: center;"></span>
+                            <div >
+                                <h3>ORDERS LIST</h3>
+                                <p>see orders list</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
     </div>
 
 

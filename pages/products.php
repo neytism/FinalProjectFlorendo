@@ -41,7 +41,7 @@ $isLoggedIn = isset($_SESSION['user_id']);
 
 <body class="stillBackground" >
 
-    <div id="productDetailModal" >
+    <div id="productDetailModal" onclick="hideProductDetail()">
         
     
     </div>

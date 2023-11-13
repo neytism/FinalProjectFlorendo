@@ -253,29 +253,27 @@ function showPassword(event) {
     }
 }
 
-
+//for cart
 var checkboxes = document.querySelectorAll('input.cart-checkbox[type="checkbox"]');
-
-
+var checkedCart = [];
 
 checkboxes.forEach(function (checkbox) {
     checkbox.addEventListener('change', function () {
-        updateTotalAmount();
+        var orderID = this.getAttribute('data-order-id');
+        updateTotalAmount(orderID, this.checked);
     });
 });
 
-function updateTotalAmount() {
+function updateTotalAmount(orderID, isChecked) {
     var totalAmount = 0;
     var totalQuantity = 0;
     
-    
     checkboxes.forEach(function (checkbox) {
+        var row = checkbox.closest('tr');
+        var quantity = parseInt(row.querySelector('.quantity').textContent);
+        var price = parseFloat(row.querySelector('.price').textContent.replace('₱', ''));
         
         if (checkbox.checked) {
-            var row = checkbox.closest('tr');
-            var quantity = parseInt(row.querySelector('.quantity').textContent);
-            var price = parseFloat(row.querySelector('.price').textContent.replace('₱', ''));
-            
             // Check if valid numbers
             if (!isNaN(quantity) && !isNaN(price)) {
                 totalAmount += quantity * price;
@@ -283,8 +281,17 @@ function updateTotalAmount() {
             }
         }
     });
-
-    if (totalQuantity >= 0) {
+    
+    if (isChecked) {
+        checkedCart.push(orderID);
+    } else {
+        var index = checkedCart.indexOf(orderID);
+        if (index > -1) {
+            checkedCart.splice(index, 1);
+        }
+    }
+    
+    if (totalQuantity > 0) {
         document.querySelector('.total-amount').textContent = '₱ ' + totalAmount.toFixed(2);
         document.querySelector('.total-quantity').textContent = 'CHECKOUT (' + totalQuantity + ')';
     } else {
@@ -292,6 +299,7 @@ function updateTotalAmount() {
         document.querySelector('.total-quantity').textContent = 'CHECKOUT';
     }
 }
+
 
 var plusButtons = document.querySelectorAll('plus-btn');
 
@@ -347,6 +355,38 @@ function updateQuantity(orderID, value) {
     
 }
 
+function checkOut(){
+    var orderIDs = [...checkedCart];
+    
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'checkOut.php', true);
+    xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    console.log(orderIDs);
+    
+    xhr.onload = function() {
+        if (this.status == 200) {
+            console.log(this.responseText);
+            document.location.href = 'checkOut.php';
+        }
+    };
+    
+    xhr.send('orderIDsFromCart=' + JSON.stringify(orderIDs));
+}
+
+function confirmCheckOut(){
+    
+    var xhr = new XMLHttpRequest();
+     xhr.open('POST', 'checkOutAction.php', true);
+     xhr.onload = function() {
+        var x = document.getElementById('thanks');
+            x.style.display = "flex";
+        
+     };
+     xhr.send();
+ 
+ }
+
+
 function deleteItem(event, productID) {
     event.preventDefault();
     
@@ -377,7 +417,7 @@ function deleteInquiry(event, inquiryID) {
     xhr.onload = function() {
         if (this.status == 200) {
             document.location.href = 'concernList.php';
-        
+            console.log(this.responseText);
         }
     };
     
@@ -407,8 +447,8 @@ function deleteUser(event, userID) {
 function showDetails(product, isLoggedIn){
     var x = document.getElementById('productDetailModal');
     
-    var details = '<div class="modalHolder">';
-    details += '<div class="productModal">';
+    var details = '<div class="modalHolder" >';
+    details += '<div class="productModal" onclick="event.stopPropagation();">';
     details += '<a type="button" class="close" aria-label="Close" onclick="hideProductDetail()"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>';
     details += '<div class="modalContent">';
     details += '<div class="modalImageHolder">';
@@ -426,7 +466,7 @@ function showDetails(product, isLoggedIn){
     if (!isLoggedIn){
         details += 'onclick="window.location.href=\'login.php\'"';
     } else{
-        details += 'onclick="addToCart(event,'+ product['product_id'] +')"';
+        details += 'onclick="event.stopPropagation(); addToCart(event,'+ product['product_id'] +')"';
     }
 
     details += ' class="btn btn-success" aria-label="Save"><span class="glyphicon glyphicon-shopping-cart"></span></button>';
@@ -436,10 +476,48 @@ function showDetails(product, isLoggedIn){
     x.style.display = 'block';
 }
 
+function changeMOP(){
+    var value = document.getElementById('modeOfPayment').value;
+    var mopHolder = document.getElementById('mopHolder');
+    var text = '';
+
+    if(value == "CC"){
+        text = "<p style=\"margin-bottom:1px;\" >Full Name</p>\
+        <input style=\"display: inline-block !important; padding: 5px 5px; width:100%; margin-bottom: 10px;\" type=\"text\" id=\"inputItemName\" placeholder=\"Nate Florendo, etc.\" required>\
+        <p style=\"margin-bottom:1px;\">Expiry Date</p>\
+        <input style=\"display: inline-block !important; padding: 5px 5px; width:49%; margin-bottom: 10px;\" type=\"text\" id=\"inputItemName\" placeholder=\"01\" required>\
+        <input style=\"display: inline-block !important; padding: 5px 5px; width:49%; margin-bottom: 10px;\" type=\"text\" id=\"inputItemName\" placeholder=\"2023\" required>\
+        <p style=\"margin-bottom:1px;\">Card Number</p>\
+        <input style=\"display: inline-block !important; padding: 5px 5px; width:69%; margin-bottom: 10px;\" type=\"text\" id=\"inputItemName\" placeholder=\"####-####-####-####\" required>\
+        <input style=\"display: inline-block !important; padding: 5px 5px; width:29%; margin-bottom: 10px;\" type=\"text\" id=\"inputItemName\" placeholder=\"CCV\" required>";    
+    } else{
+        text="";
+    }
+    
+
+    mopHolder.innerHTML = text;
+}
+
+function confirmCheckOut(){
+    
+   var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'checkOutAction.php', true); // replace with your PHP script URL
+    xhr.onload = function() {
+        var x = document.getElementById('thanks');
+        x.style.display = "flex";
+        if (this.status == 2000) {
+            document.location.href = 'cart.php';
+        }
+    };
+    xhr.send();
+
+}
+
+
 
 function hideProductDetail(){
     var x = document.getElementById('productDetailModal');
-    
+    x.innerHTML = "";
     x.style.display = 'none';
 }
 

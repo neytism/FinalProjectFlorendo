@@ -21,13 +21,13 @@ $quantity = 1;
 $userID = mysqli_real_escape_string($conn, $userID);
 $itemID = mysqli_real_escape_string($conn, $itemID);
 
-$sql = "SELECT * FROM cart WHERE product_id='$itemID' AND user_id='$userID'";
+$sql = "SELECT * FROM orders WHERE product_id='$itemID' AND user_id='$userID' AND status = 'OnCart'";
 $result = mysqli_query($conn, $sql);
 
 if (mysqli_num_rows($result) > 0) {
-    $sql = "UPDATE cart SET quantity=quantity+'$quantity' WHERE product_id='$itemID' AND user_id='$userID'";
+    $sql = "UPDATE orders SET quantity=quantity+'$quantity' WHERE product_id='$itemID' AND user_id='$userID'";
 } else {
-    $sql = "INSERT INTO cart(product_id,quantity,user_id) VALUES('$itemID','$quantity','$userID')";
+    $sql = "INSERT INTO orders(product_id,quantity,user_id) VALUES('$itemID','$quantity','$userID')";
 }
 
 mysqli_query($conn, $sql);
