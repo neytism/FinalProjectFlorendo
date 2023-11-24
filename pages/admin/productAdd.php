@@ -102,7 +102,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($itemProductType) || $itemProductType == "Set Product Type") {
         $errors['itemProductType'] = '-Product Type is required';
     }
-
+    
     if (empty($itemBrandModel)) {
         $errors['itemBrandModel'] = '-Brand/Model is required';
     }
@@ -124,7 +124,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $errors['itemImage'] = '-File already exists';
         }
     
-        if ($itemImage["size"] > 500000) {
+        if ($itemImage["size"] > 5000000) {
             $errors['itemImage'] = '-File is too large';
         }
     

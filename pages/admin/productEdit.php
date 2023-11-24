@@ -123,7 +123,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $relativeFilePath = $base_dir . $newFileName;
     
     
-        if ($itemImage["size"] > 500000) {
+        if ($itemImage["size"] > 5000000) {
             $errors['itemImage'] = '-File is too large';
         }
     

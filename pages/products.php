@@ -14,8 +14,7 @@ if (!$conn) {
     echo 'Connection error: ' . mysqli_connect_error();
 }
 
-$sql = 'SELECT product_id, itemName, description, imagePath, price, stock, product_type, brand_model FROM products ORDER BY CAST(product_type AS CHAR) ASC';
-
+$sql = 'SELECT product_id, itemName, description, imagePath, price, stock, product_type, brand_model FROM products ORDER BY CAST(product_type AS CHAR), brand_model ASC';
 
 $result = mysqli_query($conn, $sql);
 
@@ -117,7 +116,7 @@ $isLoggedIn = isset($_SESSION['user_id']);
 
                                     <a style="pointer-events: none;"
                                         class="btn buy" role="button">₱
-                                        <?php echo htmlspecialchars($product['price']) ?>
+                                        <?php echo htmlspecialchars(number_format($product['price'], 2, '.', ',')) ?>
                                     </a>
                 
                                     <a class="btn cart" role="button" <?php if (!isset($_SESSION["user_id"])) {

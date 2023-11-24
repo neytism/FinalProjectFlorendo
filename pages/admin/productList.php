@@ -111,7 +111,7 @@ $products = mysqli_fetch_all($result, MYSQLI_ASSOC);
                             <td class="description"><?php echo htmlspecialchars($product['brand_model'].": ".$product['description']) ?></td>
                             <td ><?php echo htmlspecialchars($product['imagePath']) ?></td>
                             <td ><?php echo htmlspecialchars($product['stock']) ?></td>
-                            <td >₱<?php echo htmlspecialchars($product['price']) ?></td>
+                            <td >₱<?php echo htmlspecialchars(number_format($product['price'], 2, '.', ',')) ?></td>
                             <td ><a href="productEdit.php?productID=<?php echo $product['product_id'] ?>" class="btn cart"
                                     style="color: white; background-color: gray;" role="button">edit</a></td>
                         </tr>

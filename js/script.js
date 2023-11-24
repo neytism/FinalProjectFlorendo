@@ -446,6 +446,8 @@ function deleteUser(event, userID) {
 
 function showDetails(product, isLoggedIn){
     var x = document.getElementById('productDetailModal');
+
+    var formattedPrice = '₱ ' + Number(product['price']).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     
     var details = '<div class="modalHolder" >';
     details += '<div class="productModal" onclick="event.stopPropagation();">';
@@ -457,7 +459,7 @@ function showDetails(product, isLoggedIn){
     details += '<h2>'+ product['itemName'] +'</h2>';
     details += '<p>'+product['description']+'</p>';
     details += '<p>Brand/Model: ' + product['brand_model'] + '</p>';
-    details += '<p>Price: ₱ '+ product['price'] +'</p>';
+    details += '<p>Price: '+ formattedPrice +'</p>';
     details += '<p>Stock: '+product['stock']+' remaining.</p></div></div>';
     
     //details += '<button onclick="addToCart(event,'+ product['product_id'] +'" type="button" class="btn btn-success" aria-label="Save"><span class="glyphicon glyphicon-shopping-cart"></span></button>';
@@ -468,7 +470,7 @@ function showDetails(product, isLoggedIn){
     } else{
         details += 'onclick="event.stopPropagation(); addToCart(event,'+ product['product_id'] +')"';
     }
-
+    
     details += ' class="btn btn-success" aria-label="Save"><span class="glyphicon glyphicon-shopping-cart"></span></button>';
     details += '</div></div>';
     

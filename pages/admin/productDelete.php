@@ -18,11 +18,23 @@ $productID = $_POST['productID'];
 
 $productID = mysqli_real_escape_string($conn, $productID);
 
+// Get the imagePath before deleting the record
+$sql = "SELECT imagePath FROM products WHERE product_id='$productID'";
+$result = mysqli_query($conn, $sql);
+$row = mysqli_fetch_assoc($result);
+$imagePath = '../'.$row['imagePath'];
+
+// Delete the record from the database
 $sql = "DELETE FROM products WHERE product_id='$productID'";
 if (mysqli_query($conn, $sql)) {
-    echo "Deleted successfully";
+    // Delete the image file
+    if (unlink($imagePath)) {
+        echo "Image deleted successfully";
+    } else {
+        echo "Error deleting image";
+    }
+    echo "Record deleted successfully";
 } else {
-    echo "Error deleting: " . mysqli_error($conn);
+    echo "Error deleting record: " . mysqli_error($conn);
 }
-
 ?>
